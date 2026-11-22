@@ -66,3 +66,10 @@
 /* Local GIFs contain the full animation; never fake motion by moving a still PNG. */
 .intro-char,.angry-char,.excited-char,.final-shinchan,.birthday-mini-char,.cake-shinchan,.letter-shinchan{animation:none!important}
 .intro-char,.angry-char,.excited-char{transform:translateX(-50%)!important}
+
+/* Long scrollable Hinglish birthday letter */
+.scroll-nudge{position:relative;z-index:3;text-align:center;font:clamp(11px,1.2vw,15px) 'DM Sans',Arial,sans-serif;color:#ac534d;opacity:.78;margin:1px 0 9px;letter-spacing:.4px}
+.letter-scroll{max-height:72%;overscroll-behavior:contain;scroll-behavior:smooth;scrollbar-color:#b76c5c #f6f4ed}
+.letter-body{padding-bottom:15px}
+.letter-body .closing-joke{font-family:'Caveat','DM Sans',cursive;font-size:clamp(18px,2.2vw,30px);font-weight:700;color:#a4312b;margin:15px 0 30px}
+@media(max-width:720px) and (orientation:portrait){.letter-scroll{max-height:68%}.scroll-nudge{font-size:11px}}
