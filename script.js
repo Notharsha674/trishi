@@ -63,29 +63,102 @@ window.addEventListener('keydown', e => {
 
 // Ten chosen photos without the repeated nurse picture, five at a time on the hanging memory wall.
 const memoryPhotos = ["assets/memory1.jpg","assets/memory2.jpg","assets/memory3.jpg","assets/memory5.jpg","assets/memory6.jpg","assets/memory7.jpg","assets/memory8.jpg","assets/memory9.jpg","assets/memory10.jpg","assets/memory11.jpg"];
+
 let memoryPage=0;
+let memorySwitchId=0;
 const memorySlots=Array.from(document.querySelectorAll('.memory-card'));
+const memoryGallery=document.querySelector('.memory-gallery');
+const memoryPageLabel=document.getElementById('mem-page');
+const memoryPrev=document.getElementById('mem-prev');
+const memoryNext=document.getElementById('mem-next');
 const memoryNames=['chhoti Trishi ♡','mini madam','bachpan ki star','cutie era','sweet memories','time flies yaar','iconic as always','yeh pose 😭','still adorable','birthday girl ♡'];
-function renderMemories(){
+const photosPerPage=memorySlots.length;
+const totalMemoryPages=Math.ceil(memoryPhotos.length/photosPerPage);
+const memoryImagePromises=new Map();
+
+// Load AND decode the next page early, rather than fetching the images after the click.
+function warmMemoryImage(path){
+  if(memoryImagePromises.has(path))return memoryImagePromises.get(path);
+  const task=new Promise(resolve=>{
+    const image=new Image();
+    image.decoding='async';
+    image.onload=()=>{
+      if(typeof image.decode==='function'){
+        image.decode().catch(()=>{}).then(()=>resolve(true));
+      }else resolve(true);
+    };
+    image.onerror=()=>resolve(false);
+    image.src=path;
+  });
+  memoryImagePromises.set(path,task);
+  return task;
+}
+function warmMemoryPage(page){
+  if(page<0||page>=totalMemoryPages)return Promise.resolve([]);
+  return Promise.all(memoryPhotos.slice(page*photosPerPage,(page+1)*photosPerPage).map(warmMemoryImage));
+}
+function setMemoryPager(loading=false){
+  memoryPageLabel.textContent=`${memoryPage+1} / ${totalMemoryPages}`;
+  memoryPrev.disabled=loading||memoryPage===0;
+  memoryNext.disabled=loading||memoryPage===totalMemoryPages-1;
+  memoryPrev.setAttribute('aria-busy',String(loading));
+  memoryNext.setAttribute('aria-busy',String(loading));
+}
+async function showMemoryPage(page){
+  const nextPage=Math.max(0,Math.min(totalMemoryPages-1,page));
+  if(nextPage===memoryPage)return;
+  const ticket=++memorySwitchId;
+  memoryPage=nextPage;
+
+  // Immediately cover the old photos. Page 1 must never remain visible while page 2 loads.
+  memoryGallery.classList.add('is-loading');
+  memoryGallery.setAttribute('aria-busy','true');
+  setMemoryPager(true);
+  await warmMemoryPage(nextPage);
+  if(ticket!==memorySwitchId)return;
+
+  const decodes=[];
   memorySlots.forEach((card,i)=>{
-    let index=memoryPage*5+i;
+    const index=memoryPage*photosPerPage+i;
     const photo=card.querySelector('img');
     const label=card.querySelector('small');
-    card.style.visibility=index<memoryPhotos.length?'visible':'hidden';
-    if(index<memoryPhotos.length){
-      photo.src=memoryPhotos[index];
-      photo.alt=`Trishi photo ${index+1} of ${memoryPhotos.length}`;
-      label.textContent=memoryNames[index];
+    const exists=index<memoryPhotos.length;
+    card.style.visibility=exists?'visible':'hidden';
+    if(!exists)return;
+    photo.style.display='';
+    photo.src=memoryPhotos[index];
+    photo.alt=`Trishi photo ${index+1} of ${memoryPhotos.length}`;
+    label.textContent=memoryNames[index];
+    if(typeof photo.decode==='function'){
+      decodes.push(photo.decode().catch(()=>{photo.style.display='none';}));
+    }else{
+      decodes.push(new Promise(resolve=>{
+        if(photo.complete)return resolve();
+        photo.addEventListener('load',resolve,{once:true});
+        photo.addEventListener('error',()=>{photo.style.display='none';resolve();},{once:true});
+      }));
     }
-    card.classList.remove('flip-photo');void card.offsetWidth;card.classList.add('flip-photo');
   });
-  document.getElementById('mem-page').textContent=`${memoryPage+1} / ${Math.ceil(memoryPhotos.length/5)}`;
-  document.getElementById('mem-prev').disabled=memoryPage===0;
-  document.getElementById('mem-next').disabled=memoryPage===Math.ceil(memoryPhotos.length/5)-1;
+  await Promise.all(decodes);
+  if(ticket!==memorySwitchId)return;
+
+  memorySlots.forEach(card=>{
+    card.classList.remove('flip-photo');
+    void card.offsetWidth;
+    card.classList.add('flip-photo');
+  });
+  memoryGallery.classList.remove('is-loading');
+  memoryGallery.setAttribute('aria-busy','false');
+  setMemoryPager(false);
+  // Keep both page sets cached so navigating backwards is instant.
+  void warmMemoryPage(memoryPage+1);
+  void warmMemoryPage(memoryPage-1);
 }
-document.getElementById('mem-prev').addEventListener('click',()=>{memoryPage=Math.max(0,memoryPage-1);renderMemories()});
-document.getElementById('mem-next').addEventListener('click',()=>{memoryPage=Math.min(Math.ceil(memoryPhotos.length/5)-1,memoryPage+1);renderMemories()});
-renderMemories();
+memoryPrev.addEventListener('click',()=>{void showMemoryPage(memoryPage-1);});
+memoryNext.addEventListener('click',()=>{void showMemoryPage(memoryPage+1);});
+setMemoryPager();
+// Prefetch the second page as soon as the birthday website starts loading.
+void warmMemoryPage(1);
 
 // Tiny bestie roast when opening gift three — the letter itself stays sweet.
 const thirdGift = document.querySelector('.gift[data-go="letter"]');
