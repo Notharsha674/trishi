@@ -81,3 +81,45 @@
 @media(max-width:720px) and (orientation:portrait){.song-player{bottom:36px;left:7px;padding:4px 8px 4px 4px;gap:5px}.song-player button{padding:8px 9px;font-size:11px}.song-player-tip{font-size:9px}.letter-scroll{max-height:68%}.scroll-nudge{font-size:11px}.gif-credit{display:none}}
 @media(max-width:400px){.song-player-tip{display:none}}
 
+
+
+/* Navigation fix: keep Back to Gifts away from the persistent bottom-left music player. */
+#memories .memory-back,
+#cake .nav-back {
+  position: absolute;
+  top: clamp(14px, 2.8vh, 30px);
+  left: clamp(14px, 2.4vw, 34px);
+  bottom: auto;
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  min-width: 145px;
+  padding: 10px 15px;
+  border: 2px solid #ac352f;
+  border-radius: 999px;
+  background: #fff9ed;
+  box-shadow: 3px 4px 0 #b64b40, 0 8px 16px #61332933;
+  color: #9f2523;
+  font: 800 clamp(12px, 1.25vw, 17px)/1.2 'DM Sans',Arial,sans-serif;
+  letter-spacing: .1px;
+  white-space: nowrap;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+#memories .memory-back:hover,
+#cake .nav-back:hover { transform: translateY(-2px); }
+#memories .memory-back:focus-visible,
+#cake .nav-back:focus-visible { outline: 3px solid #e9a13b; outline-offset: 4px; }
+@media(max-width:720px) and (orientation:portrait){
+  #memories .memory-back,
+  #cake .nav-back {
+    top: 14px;
+    left: 12px;
+    min-width: 130px;
+    min-height: 44px;
+    padding: 9px 13px;
+    font-size: 12px;
+  }
+}
