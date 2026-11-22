@@ -90,3 +90,54 @@ renderMemories();
 // Tiny bestie roast when opening gift three — the letter itself stays sweet.
 const thirdGift = document.querySelector('.gift[data-go="letter"]');
 if(thirdGift) thirdGift.title='Gift 3 mein cute letter aur free roast. Ready ho, madam? 😌';
+
+
+// Try to start music immediately. Browsers may block sound until a user gesture.
+const birthdayAudio=document.getElementById('birthday-audio');
+const musicButton=document.getElementById('music-button');
+const musicLabel=document.getElementById('music-label');
+let userStoppedMusic=false;
+birthdayAudio.volume=0.44;
+function updateMusicButton(){
+  const active=!birthdayAudio.paused;
+  musicLabel.textContent=active?'Pause song':'Play song';
+  musicButton.setAttribute('aria-label',active?'Pause birthday song':'Play birthday song');
+  musicButton.setAttribute('aria-pressed',String(active));
+}
+function playBirthdayMusic(){
+  const attempted=birthdayAudio.play();
+  if(attempted?.catch)attempted.catch(()=>{
+    updateMusicButton();
+    if(!userStoppedMusic && birthdayAudio.paused){
+      musicLabel.textContent='Tap to start music';
+      musicButton.title='Tap anywhere to start the birthday song';
+    }
+  });
+}
+musicButton.addEventListener('click',()=>{
+  if(birthdayAudio.paused){userStoppedMusic=false;playBirthdayMusic();}
+  else{userStoppedMusic=true;birthdayAudio.pause();}
+});
+document.querySelectorAll('button[data-go]').forEach(button=>{
+  button.addEventListener('click',()=>{if(birthdayAudio.paused && !userStoppedMusic)playBirthdayMusic();});
+});
+birthdayAudio.addEventListener('play',updateMusicButton);
+birthdayAudio.addEventListener('pause',updateMusicButton);
+birthdayAudio.addEventListener('error',()=>{
+  musicLabel.textContent='Audio unavailable';
+  musicButton.title='Song file missing — add assets/birthday-song.m4a';
+});
+updateMusicButton();
+
+// Browsers often block sound on page load. The first tap anywhere unlocks it.
+function startMusicOnInteraction(event){
+  if(userStoppedMusic || !birthdayAudio.paused) return;
+  if(event.target?.closest?.('#music-button')) return; // music button handles itself
+  playBirthdayMusic();
+}
+document.addEventListener('pointerdown',startMusicOnInteraction,{capture:true});
+document.addEventListener('keydown',event=>{
+  if(!event.repeat) startMusicOnInteraction(event);
+},{capture:true});
+// Attempt immediately when page opens. This works on browsers that permit autoplay.
+playBirthdayMusic();

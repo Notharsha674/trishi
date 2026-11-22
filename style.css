@@ -67,9 +67,17 @@
 .intro-char,.angry-char,.excited-char,.final-shinchan,.birthday-mini-char,.cake-shinchan,.letter-shinchan{animation:none!important}
 .intro-char,.angry-char,.excited-char{transform:translateX(-50%)!important}
 
-/* Long scrollable Hinglish birthday letter */
+/* Long-form handwritten letter and scroll cue */
 .scroll-nudge{position:relative;z-index:3;text-align:center;font:clamp(11px,1.2vw,15px) 'DM Sans',Arial,sans-serif;color:#ac534d;opacity:.78;margin:1px 0 9px;letter-spacing:.4px}
 .letter-scroll{max-height:72%;overscroll-behavior:contain;scroll-behavior:smooth;scrollbar-color:#b76c5c #f6f4ed}
 .letter-body{padding-bottom:15px}
 .letter-body .closing-joke{font-family:'Caveat','DM Sans',cursive;font-size:clamp(18px,2.2vw,30px);font-weight:700;color:#a4312b;margin:15px 0 30px}
-@media(max-width:720px) and (orientation:portrait){.letter-scroll{max-height:68%}.scroll-nudge{font-size:11px}}
+/* Persistent tap-to-play music; browser policies require a user gesture for sound */
+.song-player{position:fixed;bottom:14px;left:14px;z-index:9998;display:flex;align-items:center;gap:8px;background:rgba(255,250,245,.94);border:2px solid #b73932;border-radius:100px;box-shadow:0 3px 0 #a43b32,0 8px 20px #5e262633;padding:5px 12px 5px 5px;max-width:calc(100vw - 25px)}
+.song-player button{border:0;border-radius:100px;background:#b51d21;color:white;padding:8px 15px;font:700 13px 'DM Sans',sans-serif;cursor:pointer;white-space:nowrap}
+.song-player button:hover{background:#932127}
+.song-player button:focus-visible{outline:3px solid #f5ae4c;outline-offset:2px}
+.song-player-tip{font:600 11px 'DM Sans',sans-serif;color:#9c302b;white-space:nowrap}
+@media(max-width:720px) and (orientation:portrait){.song-player{bottom:36px;left:7px;padding:4px 8px 4px 4px;gap:5px}.song-player button{padding:8px 9px;font-size:11px}.song-player-tip{font-size:9px}.letter-scroll{max-height:68%}.scroll-nudge{font-size:11px}.gif-credit{display:none}}
+@media(max-width:400px){.song-player-tip{display:none}}
+
