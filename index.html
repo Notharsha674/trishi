@@ -3,15 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="trishi-build" content="2026-11-26-v8-normal-bestie" />
+  <meta name="trishi-build" content="2026-11-26-v9-funzone" />
   <meta name="theme-color" content="#c93d24" />
   <meta name="description" content="A tiny, very dramatic birthday surprise for Trishi!" />
   <title>For Trishi 💌 | A Birthday Surprise</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Caveat:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=8" />
-  <script src="script.js?v=8" defer></script>
+  <link rel="stylesheet" href="style.css?v=9" />
+  <link rel="stylesheet" href="funzone.css?v=1" />
+  <script src="script.js?v=9" defer></script>
+  <script src="funzone.js?v=1" defer></script>
 </head>
 <body data-scene="welcome">
 
@@ -23,6 +25,7 @@
       <button type="button" data-go="memories">Photos</button>
       <button type="button" data-go="letter">Note</button>
       <button type="button" data-go="final">Final wish</button>
+      <button type="button" data-go="fun">Fun Zone 🎮</button>
     </div>
   </nav>
   <main class="stage" id="stage">
@@ -77,6 +80,7 @@
           <button type="button" class="gift" data-go="memories" aria-label="Open gift two, memories"><img src="assets/gift2.png" alt="Pink gift box with red bow"/><span class="gift-label">gift 2</span></button>
           <button type="button" class="gift" data-go="letter" aria-label="Open gift three, letter"><img src="assets/gift3.png" alt="Pink gift box with red bow"/><span class="gift-label">gift 3</span></button>
         </div>
+        <button type="button" class="fun-link" data-go="fun">🎮 FUN ZONE</button>
         <div class="gift-caption">CHOOSE A GIFT</div>
         <button type="button" class="next-arrow gift-next" data-go="final" aria-label="See final wish">❯</button>
       </div>
@@ -186,9 +190,165 @@
       </div>
     </section>
 
+
+    <!-- OPTIONAL INTERACTIVE FUN ZONE: the original three birthday gifts stay unchanged -->
+    <section class="scene fun-scene" id="fun" aria-label="Interactive birthday fun zone" hidden>
+      <div class="fun-sheet">
+        <header class="fun-header">
+          <p class="fun-eyebrow">FROM ASH TO TRISHI</p>
+          <h1 class="fun-title">FUN ZONE 🎮</h1>
+          <p class="fun-subtitle">No speeches. Just games, photos and random bakwas.</p>
+          <div class="fun-tabs" role="tablist" aria-label="Fun Zone categories">
+            <button type="button" role="tab" data-fun-tab="games" aria-selected="true" class="selected">🎲 Games</button>
+            <button type="button" role="tab" data-fun-tab="random" aria-selected="false">🎤 Random</button>
+            <button type="button" role="tab" data-fun-tab="photos" aria-selected="false">📸 Photos</button>
+            <button type="button" role="tab" data-fun-tab="extras" aria-selected="false">⚙️ Extras</button>
+          </div>
+        </header>
+        <div class="fun-body" id="fun-body">
+          <div class="fun-panel" data-fun-panel="games">
+            <div class="fun-grid">
+              <article class="fun-card wide">
+                <h2>Memory Match 🃏</h2>
+                <p>Match six pairs. Fewer moves = better.</p>
+                <div id="match-board" class="match-board" aria-label="Memory matching game"></div>
+                <div class="fun-row"><span id="match-status" class="fun-status" aria-live="polite">0 matches · 0 moves</span><button type="button" id="match-reset" class="fun-secondary">Shuffle again</button></div>
+              </article>
+              <article class="fun-card">
+                <h2>10-second Tap Game ⏱️</h2>
+                <p>How many times can you catch the button?</p>
+                <div class="fun-row"><button type="button" id="tap-start" class="fun-action">Start round</button><strong id="tap-time" class="fun-status">10.0s</strong><span id="tap-best" class="fun-status">Best: 0</span></div>
+                <div id="tap-arena" class="tap-arena"><button type="button" id="tap-target" class="tap-target" disabled>TAP</button></div>
+                <p id="tap-score" class="fun-status" aria-live="polite">Taps: 0</p>
+              </article>
+              <article class="fun-card">
+                <h2>This or That?</h2>
+                <p id="choice-prompt" class="fun-status" aria-live="polite">Pick one</p>
+                <div class="choice-buttons"><button type="button" id="choice-a" class="fun-secondary">Option A</button><button type="button" id="choice-b" class="fun-secondary">Option B</button></div>
+                <p id="choice-progress" class="fun-status">No wrong answers.</p>
+                <button type="button" id="choice-next" class="fun-action" hidden>Play again</button>
+              </article>
+            </div>
+          </div>
+          <div class="fun-panel" data-fun-panel="random" hidden>
+            <div class="fun-grid">
+              <article class="fun-card">
+                <h2>Roast Roulette 🔥</h2>
+                <p>Normal bestie-level roasting. No serious offence.</p>
+                <div class="fun-answer" id="roast-output" aria-live="polite">Press the button. Risk is yours.</div>
+                <button type="button" id="roast-go" class="fun-action">Roast me</button>
+              </article>
+              <article class="fun-card">
+                <h2>Hype Generator</h2>
+                <p>For when the roast gets too much.</p>
+                <div class="fun-answer" id="hype-output" aria-live="polite">One normal, friendly compliment.</div>
+                <button type="button" id="hype-go" class="fun-action">Say something nice</button>
+              </article>
+              <article class="fun-card">
+                <h2>Random Fortune 🥠</h2>
+                <p>Completely made up, obviously.</p>
+                <div class="fun-answer" id="fortune-output" aria-live="polite">What does the extremely unqualified fortune cookie say?</div>
+                <button type="button" id="fortune-go" class="fun-action">Crack another</button>
+              </article>
+              <article class="fun-card">
+                <h2>Would You Rather?</h2>
+                <p id="wyr-count" class="fun-status">1 / 8</p>
+                <div class="choice-buttons"><button type="button" id="wyr-a" class="fun-secondary">A</button><button type="button" id="wyr-b" class="fun-secondary">B</button></div>
+                <p id="wyr-result" class="fun-status" aria-live="polite">Choose one.</p>
+                <button type="button" id="wyr-next" class="fun-action" disabled>Next question →</button>
+              </article>
+            </div>
+          </div>
+          <div class="fun-panel" data-fun-panel="photos" hidden>
+            <div class="fun-grid">
+              <article class="fun-card wide">
+                <h2>Memory Slideshow 📸</h2>
+                <p>Ten photos. Shuffle them or run your own mini slideshow.</p>
+                <div class="slide-frame"><img id="slide-image" src="assets/memory1.jpg" alt="Trishi memory photo" /><p id="slide-caption" class="fun-status">Photo 1</p></div>
+                <div class="fun-row center">
+                  <button type="button" id="slide-prev" class="fun-secondary">← Prev</button>
+                  <button type="button" id="slide-next" class="fun-secondary">Next →</button>
+                  <button type="button" id="slide-random" class="fun-secondary">Shuffle</button>
+                  <button type="button" id="slide-auto" class="fun-action" aria-pressed="false">▶ Auto</button>
+                </div>
+              </article>
+              <article class="fun-card wide">
+                <h2>Original photo wall</h2>
+                <p>Want the full polaroid gallery and zoom? You can jump back without restarting the music.</p>
+                <button type="button" data-go="memories" class="fun-secondary">Open photo wall →</button>
+              </article>
+            </div>
+          </div>
+          <div class="fun-panel" data-fun-panel="extras" hidden>
+            <div class="fun-grid">
+              <article class="fun-card wide">
+                <h2>Scratch Card ✨</h2>
+                <p>Scratch with your mouse or finger. There's also a Reveal button.</p>
+                <div id="scratch-host" class="scratch-host">
+                  <div class="scratch-under"><strong>BKL, cake khila dena. Bas itni si wish thi.</strong><small>— Ash. Ab jaa, party kar.</small></div>
+                  <canvas id="scratch-canvas" aria-label="Scratch the card with your mouse or finger" width="550" height="145"></canvas>
+                </div>
+                <div class="fun-row center"><button type="button" id="scratch-reveal" class="fun-action">Reveal</button><button type="button" id="scratch-reset" class="fun-secondary">Scratch again</button></div>
+              </article>
+              <article class="fun-card">
+                <h2>Pick the Plan</h2>
+                <p>What should the birthday vibe be?</p>
+                <div class="fun-row">
+                  <button type="button" class="fun-secondary" data-plan="food" aria-pressed="false">Food</button>
+                  <button type="button" class="fun-secondary" data-plan="movie" aria-pressed="false">Movie</button>
+                  <button type="button" class="fun-secondary" data-plan="chill" aria-pressed="false">Chill</button>
+                  <button type="button" class="fun-secondary" data-plan="outing" aria-pressed="false">Outing</button>
+                </div>
+                <p id="plan-output" class="fun-status" aria-live="polite">Make a choice.</p>
+              </article>
+              <article class="fun-card">
+                <h2>Rate Ash's Website</h2>
+                <p>No pressure. Your rating is only saved on this browser.</p>
+                <div class="rating-list" aria-label="Website rating">
+                  <button type="button" data-rate="1" aria-label="1 out of 5" aria-pressed="false">★</button>
+                  <button type="button" data-rate="2" aria-label="2 out of 5" aria-pressed="false">★</button>
+                  <button type="button" data-rate="3" aria-label="3 out of 5" aria-pressed="false">★</button>
+                  <button type="button" data-rate="4" aria-label="4 out of 5" aria-pressed="false">★</button>
+                  <button type="button" data-rate="5" aria-label="5 out of 5" aria-pressed="false">★</button>
+                </div>
+                <p id="rating-output" class="fun-status" aria-live="polite">Pick a rating.</p>
+              </article>
+              <article class="fun-card">
+                <h2>Note to Yourself</h2>
+                <p>Write something you want to remember. Saved only on this device, not sent to Ash.</p>
+                <textarea id="wish-text" class="fun-note" maxlength="240" placeholder="A plan, a goal, or a random thought..."></textarea>
+                <div class="fun-row"><button type="button" id="wish-save" class="fun-action">Save note</button><button type="button" id="wish-clear" class="fun-secondary">Clear</button></div>
+                <p id="wish-status-local" class="fun-status" aria-live="polite"></p>
+              </article>
+              <article class="fun-card">
+                <h2>Song Controls 🎵</h2>
+                <p>Skip to a favourite part of the current track.</p>
+                <input id="song-seek" type="range" min="0" max="1000" value="0" disabled aria-label="Song position"/>
+                <p id="song-time" class="fun-status">0:00 / 0:00</p>
+                <p class="fun-notice">Play/pause and volume are available on the page too.</p>
+              </article>
+              <article class="fun-card">
+                <h2>Extra Buttons</h2>
+                <p>Useful things and a bit of chaos.</p>
+                <div class="fun-row">
+                  <button type="button" id="copy-link" class="fun-secondary">Copy website link</button>
+                  <button type="button" id="confetti-button" class="fun-action">Confetti 🎉</button>
+                </div>
+                <p class="fun-notice">Shortcut: press ? to open Fun Zone from anywhere on the website.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+        <footer class="fun-footer">
+          <small>Just bestie things. No drama. — ash</small>
+          <button type="button" class="fun-return" data-go="gifts">← Back to gifts</button>
+        </footer>
+      </div>
+    </section>
   </main>
   <div class="gif-credit" aria-hidden="true">Shinchan animation from the birthday reference video ♡</div>
   <div class="confetti-container" id="confetti" aria-hidden="true"></div>
+  <div id="fun-toast" class="fun-toast" role="status" hidden></div>
   <p class="rotate-tip" id="rotate-tip">↻ Rotate your phone for the closest look to the video.</p>
 
 
