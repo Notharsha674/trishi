@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="trishi-build" content="2026-11-26-v9-funzone" />
+  <meta name="trishi-build" content="2026-11-26-v10-real-games" />
   <meta name="theme-color" content="#c93d24" />
   <meta name="description" content="A tiny, very dramatic birthday surprise for Trishi!" />
   <title>For Trishi 💌 | A Birthday Surprise</title>
@@ -12,13 +12,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Caveat:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css?v=9" />
   <link rel="stylesheet" href="funzone.css?v=1" />
+  <link rel="stylesheet" href="minigames.css?v=1" />
   <script src="script.js?v=9" defer></script>
   <script src="funzone.js?v=1" defer></script>
+  <script src="minigames.js?v=1" defer></script>
 </head>
 <body data-scene="welcome">
 
   <nav class="quick-nav" aria-label="Quick navigation">
     <button type="button" id="nav-toggle" aria-expanded="false" aria-controls="nav-options">☰ Menu</button>
+    <button type="button" class="jump-games" data-go="fun" aria-label="Open mini-games">🎮 Games</button>
     <div class="nav-options" id="nav-options" hidden>
       <button type="button" data-go="welcome">Start</button>
       <button type="button" data-go="gifts">Gifts</button>
@@ -80,7 +83,7 @@
           <button type="button" class="gift" data-go="memories" aria-label="Open gift two, memories"><img src="assets/gift2.png" alt="Pink gift box with red bow"/><span class="gift-label">gift 2</span></button>
           <button type="button" class="gift" data-go="letter" aria-label="Open gift three, letter"><img src="assets/gift3.png" alt="Pink gift box with red bow"/><span class="gift-label">gift 3</span></button>
         </div>
-        <button type="button" class="fun-link" data-go="fun">🎮 FUN ZONE</button>
+        <button type="button" class="fun-link" data-go="fun">🎮 PLAY MINI GAMES</button>
         <div class="gift-caption">CHOOSE A GIFT</div>
         <button type="button" class="next-arrow gift-next" data-go="final" aria-label="See final wish">❯</button>
       </div>
@@ -196,8 +199,8 @@
       <div class="fun-sheet">
         <header class="fun-header">
           <p class="fun-eyebrow">FROM ASH TO TRISHI</p>
-          <h1 class="fun-title">FUN ZONE 🎮</h1>
-          <p class="fun-subtitle">No speeches. Just games, photos and random bakwas.</p>
+          <h1 class="fun-title">MINI-GAMES 🎮</h1>
+          <p class="fun-subtitle">9 playable games, photos and some bakwas. Pick a game below.</p>
           <div class="fun-tabs" role="tablist" aria-label="Fun Zone categories">
             <button type="button" role="tab" data-fun-tab="games" aria-selected="true" class="selected">🎲 Games</button>
             <button type="button" role="tab" data-fun-tab="random" aria-selected="false">🎤 Random</button>
@@ -207,21 +210,34 @@
         </header>
         <div class="fun-body" id="fun-body">
           <div class="fun-panel" data-fun-panel="games">
+
+            <div class="game-picker" aria-label="Choose a mini-game">
+              <strong>Choose your game (9 playable):</strong>
+              <button type="button" data-game-jump="game-ttt">⭕ Tic-Tac-Toe</button>
+              <button type="button" data-game-jump="game-rps">✊ Rock Paper Scissors</button>
+              <button type="button" data-game-jump="game-reaction">⚡ Reaction</button>
+              <button type="button" data-game-jump="game-whack">🍰 Catch the Cake</button>
+              <button type="button" data-game-jump="game-number">🔢 Guess Number</button>
+              <button type="button" data-game-jump="game-word">🔤 Word Scramble</button>
+              <button type="button" data-game-jump="game-match">🃏 Memory Match</button>
+              <button type="button" data-game-jump="game-tap">🎯 Tap Challenge</button>
+              <button type="button" data-game-jump="game-choice">🎲 This or That</button>
+            </div>
             <div class="fun-grid">
-              <article class="fun-card wide">
+              <article class="fun-card wide game-anchor" id="game-match">
                 <h2>Memory Match 🃏</h2>
                 <p>Match six pairs. Fewer moves = better.</p>
                 <div id="match-board" class="match-board" aria-label="Memory matching game"></div>
                 <div class="fun-row"><span id="match-status" class="fun-status" aria-live="polite">0 matches · 0 moves</span><button type="button" id="match-reset" class="fun-secondary">Shuffle again</button></div>
               </article>
-              <article class="fun-card">
+              <article class="fun-card game-anchor" id="game-tap">
                 <h2>10-second Tap Game ⏱️</h2>
                 <p>How many times can you catch the button?</p>
                 <div class="fun-row"><button type="button" id="tap-start" class="fun-action">Start round</button><strong id="tap-time" class="fun-status">10.0s</strong><span id="tap-best" class="fun-status">Best: 0</span></div>
                 <div id="tap-arena" class="tap-arena"><button type="button" id="tap-target" class="tap-target" disabled>TAP</button></div>
                 <p id="tap-score" class="fun-status" aria-live="polite">Taps: 0</p>
               </article>
-              <article class="fun-card">
+              <article class="fun-card game-anchor" id="game-choice">
                 <h2>This or That?</h2>
                 <p id="choice-prompt" class="fun-status" aria-live="polite">Pick one</p>
                 <div class="choice-buttons"><button type="button" id="choice-a" class="fun-secondary">Option A</button><button type="button" id="choice-b" class="fun-secondary">Option B</button></div>
@@ -229,6 +245,61 @@
                 <button type="button" id="choice-next" class="fun-action" hidden>Play again</button>
               </article>
             </div>
+
+              <article class="fun-card game-anchor" id="game-ttt">
+                <h2>Tic-Tac-Toe ⭕</h2>
+                <p>You play X; computer plays O. Try beating it.</p>
+                <div class="ttt-board" id="ttt-board" role="group" aria-label="Tic tac toe board"></div>
+                <div class="fun-row"><span id="ttt-result" class="fun-status" aria-live="polite">Your turn.</span><button type="button" id="ttt-reset" class="fun-secondary">New round</button></div>
+                <p id="ttt-score" class="fun-status">You 0 · CPU 0 · Draw 0</p>
+              </article>
+              <article class="fun-card game-anchor" id="game-rps">
+                <h2>Rock Paper Scissors ✊</h2>
+                <p>Play against the computer. Wins and ties are counted.</p>
+                <div class="rps-row">
+                  <button type="button" data-rps="rock" aria-label="Play rock">✊<small>Rock</small></button>
+                  <button type="button" data-rps="paper" aria-label="Play paper">✋<small>Paper</small></button>
+                  <button type="button" data-rps="scissors" aria-label="Play scissors">✌️<small>Scissors</small></button>
+                </div>
+                <p id="rps-result" class="fun-status" aria-live="polite">Choose rock, paper or scissors.</p>
+                <div class="fun-row"><span id="rps-score" class="fun-status"></span><button type="button" id="rps-reset" class="fun-secondary">Reset scores</button></div>
+              </article>
+              <article class="fun-card game-anchor" id="game-reaction">
+                <h2>Reaction Speed ⚡</h2>
+                <p>Press Start, wait for green, then tap. Don't tap early.</p>
+                <button type="button" class="reaction-pad" id="reaction-pad">Start reaction test</button>
+                <p id="reaction-result" class="fun-status" aria-live="polite">Wait for green, then react.</p>
+                <p id="reaction-best" class="fun-status">Best: —</p>
+              </article>
+              <article class="fun-card game-anchor" id="game-whack">
+                <h2>Catch the Cake 🍰</h2>
+                <p>Hit as many cakes as possible in 20 seconds.</p>
+                <div class="fun-row"><button type="button" id="whack-start" class="fun-action">Start round</button><span id="whack-time" class="fun-status">20s</span><span id="whack-score" class="fun-status">Score: 0</span></div>
+                <div class="whack-board" id="whack-board" role="group" aria-label="Catch the cake tiles"></div>
+                <p id="whack-result" class="fun-status" aria-live="polite">Tap Start to play.</p><p id="whack-best" class="fun-status">Best: 0</p>
+              </article>
+              <article class="fun-card game-anchor" id="game-number">
+                <h2>Guess the Number 🔢</h2>
+                <p>Between 1 and 50. Get higher/lower hints. Seven tries.</p>
+                <form id="number-form" class="guess-form">
+                  <input type="number" class="game-inline-input" id="number-input" min="1" max="50" step="1" placeholder="1–50" required aria-label="Your number guess" />
+                  <button type="submit" id="number-submit" class="fun-action">Guess</button>
+                  <button type="button" id="number-reset" class="fun-secondary">New number</button>
+                </form>
+                <p id="number-result" class="fun-status" aria-live="polite">Pick a number.</p><p id="number-history" class="game-history"></p>
+              </article>
+              <article class="fun-card game-anchor" id="game-word">
+                <h2>Word Scramble 🔤</h2>
+                <p>Unscramble the letters. Hints and skips are allowed.</p>
+                <div id="word-display" class="word-display">READY</div>
+                <p id="word-progress" class="fun-status">1 / 12</p>
+                <form id="word-form" class="word-form">
+                  <input type="text" id="word-input" class="game-inline-input" autocomplete="off" spellcheck="false" placeholder="Your answer" aria-label="Unscrambled word" required />
+                  <button type="submit" id="word-check" class="fun-action">Check</button>
+                </form>
+                <div class="fun-row"><button type="button" id="word-hint" class="fun-secondary">Hint</button><button type="button" id="word-skip" class="fun-secondary">Skip</button><button type="button" id="word-reset" class="fun-secondary">New game</button></div>
+                <p id="word-hint-text" class="word-hint"></p><p id="word-result" class="fun-status" aria-live="polite">Unscramble the letters.</p>
+              </article>
           </div>
           <div class="fun-panel" data-fun-panel="random" hidden>
             <div class="fun-grid">
@@ -346,7 +417,6 @@
       </div>
     </section>
   </main>
-  <div class="gif-credit" aria-hidden="true">Shinchan animation from the birthday reference video ♡</div>
   <div class="confetti-container" id="confetti" aria-hidden="true"></div>
   <div id="fun-toast" class="fun-toast" role="status" hidden></div>
   <p class="rotate-tip" id="rotate-tip">↻ Rotate your phone for the closest look to the video.</p>
