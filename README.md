@@ -58,3 +58,11 @@ Select `main` + `/ (root)` in Settings → Pages.
 - Never publish photos or recordings without permission. Public GitHub Pages makes assets accessible to visitors.
 - A local rating or note is not shared to the website owner. This is a static site with no backend.
 - If a change looks stale, do a hard refresh (Ctrl + Shift + R).
+
+## Optional private response dashboard + email alerts (setup required)
+
+A new opt-in form lets visitors choose **only** their This-or-That / Would-You-Rather answers, completed game scores, and optional site rating, inspect a preview, then press Send with explicit consent and a private invite code. No automatic transmission, no personal note sharing.
+
+Ash's authenticated dashboard page: https://notharsha674.github.io/trishi/ash-dashboard.html
+
+**Not connected yet.** The frontend, owner-only database SQL, backend Edge Function and email integration source are committed, but need a personal Supabase project, Resend credentials, the owner's Auth UUID, and a shared private invitation code. See [SETUP-PRIVATE-DASHBOARD.md](SETUP-PRIVATE-DASHBOARD.md). Never commit any private credentials.
