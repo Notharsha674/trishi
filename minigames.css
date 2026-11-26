@@ -1,0 +1,53 @@
+/* Mini-games: large tap targets, proper board states, responsive layouts. */
+.jump-games{border:2px solid #b52f29;background:#b62e2d;color:white;border-radius:999px;font:800 12px/1.1 'DM Sans',Arial,sans-serif;padding:9px 13px;min-height:42px;box-shadow:0 3px 0 #79312e;cursor:pointer}
+.jump-games:hover{background:#942623}
+.quick-nav{display:flex;align-items:flex-start;gap:7px}
+.fun-link{padding:11px 18px;font-size:clamp(12px,1.35vw,18px);background:#b63832;color:white;box-shadow:0 4px 0 #82322d;border-color:#aa2522}
+.fun-link:hover{background:#992d29}
+.game-picker{display:flex;flex-wrap:wrap;gap:7px;padding:12px;background:#fdf7ea;border:1px solid #d6b1a0;border-radius:15px;margin:0 0 12px}
+.game-picker strong{width:100%;font:800 14px 'DM Sans',Arial,sans-serif;color:#963c32}
+.game-picker button{border:1px solid #bd9388;background:#fff;border-radius:999px;padding:8px 11px;min-height:38px;font:700 clamp(11px,1.05vw,14px) 'DM Sans',Arial,sans-serif;color:#863a33;cursor:pointer}
+.game-picker button:hover{background:#ffe4d7}
+.game-picker button:focus-visible{outline:3px solid #e5a547;outline-offset:2px}
+.game-anchor{scroll-margin-top:15px}
+.game-card-highlight{outline:3px solid #e6ad50;outline-offset:3px}
+.game-inline-input{height:41px;border:1.5px solid #bd8b7e;background:#fffdf7;border-radius:11px;padding:8px 12px;font:700 14px 'DM Sans',Arial,sans-serif;color:#633e37;min-width:0;max-width:170px;width:100%}
+.game-inline-input:focus-visible{outline:3px solid #e6a44f}
+.rps-row{display:flex;justify-content:center;flex-wrap:wrap;gap:9px;margin:12px 0}
+.rps-row button{border:2px solid #b9857c;border-radius:12px;background:#fff7ed;min-width:76px;min-height:62px;padding:7px;font-size:29px;cursor:pointer}
+.rps-row button:hover{transform:translateY(-3px);background:#ffe2d4}
+.rps-row small{display:block;font:650 11px 'DM Sans',sans-serif;color:#86392f}
+.ttt-board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;max-width:255px;margin:10px auto}
+.ttt-cell{height:73px;border:2px solid #c3998d;border-radius:10px;background:#fff7ed;font:900 33px/1 'DM Sans',Arial,sans-serif;color:#b12a2b;cursor:pointer;transition:background .1s}
+.ttt-cell:disabled{cursor:default}
+.ttt-cell:not(:disabled):hover{background:#ffe5db}
+.ttt-cell:focus-visible{outline:3px solid #edaa43}
+.guess-form,.word-form{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0}
+.word-display{font:900 clamp(23px,3vw,35px)/1.35 'DM Sans',sans-serif;color:#a53631;letter-spacing:.24em;text-align:center;padding:12px;border:2px dashed #d4aaa0;border-radius:12px;background:#fff6eb;overflow-wrap:anywhere}
+.game-history{font:600 11px/1.4 'DM Sans',Arial,sans-serif;color:#92736b;min-height:16px;overflow-wrap:anywhere}
+.reaction-pad{display:flex;justify-content:center;align-items:center;width:100%;height:130px;margin:12px 0;border:2px solid #a76559;border-radius:14px;background:#eed4c6;color:#7b4037;font:900 clamp(16px,2vw,23px)/1.25 'DM Sans',Arial,sans-serif;cursor:pointer;touch-action:manipulation}
+.reaction-pad.waiting{background:#d84b39;color:white}
+.reaction-pad.ready{background:#4d9b65;color:white;border-color:#386a4a}
+.reaction-pad.too-soon{background:#efc7ae;color:#8d3b32}
+.reaction-pad.result{background:#f7edda}
+.whack-board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;max-width:255px;margin:10px auto}
+.whack-tile{height:65px;border:2px solid #d7aa99;border-radius:12px;background:#f8e5d8;font-size:24px;color:#d8b7a5;cursor:pointer}
+.whack-tile.target{background:#fff2cf;box-shadow:inset 0 0 0 2px #efc575}
+.whack-tile:focus-visible{outline:3px solid #e4a147}
+.word-hint{font-size:12px!important;color:#92665b!important;min-height:18px}
+@media(max-width:760px){
+ .quick-nav{gap:5px}
+ .jump-games{font-size:11px;padding:6px 9px;min-height:36px}
+ .game-picker{gap:5px;padding:9px}
+ .game-picker button{font-size:10px;padding:6px 9px;min-height:34px}
+ .ttt-cell{height:66px}
+ .reaction-pad{height:112px}
+ .whack-tile{height:62px}
+ .fun-link{padding:8px 12px;font-size:11px}
+}
+@media(max-width:390px){
+ .game-picker button{font-size:10px}
+ .rps-row button{min-width:65px}
+ .game-inline-input{max-width:145px}
+}
+@media(prefers-reduced-motion:reduce){.rps-row button,.ttt-cell{transition:none}}
