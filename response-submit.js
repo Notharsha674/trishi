@@ -36,7 +36,12 @@ function getScores(){
     ['Catch the Cake','whack-result',t=>/^Round over/.test(t)],
     ['Reaction Speed','reaction-result',t=>/^\d+\s*ms/.test(t)],
     ['Guess the Number','number-result',t=>/Correct!|Out of tries/.test(t)],
-    ['Word Scramble','word-progress',t=>/\bScore\s+[1-9]\d*/.test(t)]
+    ['Word Scramble','word-progress',t=>/\bScore\s+[1-9]\d*/.test(t)],
+    ['2048','game2048-score',t=>/^Score:\s*[1-9]\d*/.test(t)],
+    ['Sequence Recall','simon-best',t=>/^Best:\s*[1-9]\d*/.test(t)],
+    ['Typing Sprint','typing-result',t=>/^Finished:/.test(t)],
+    ['Math Dash','math-status',t=>/^\d+\s*\/\s*10 correct/.test(t)],
+    ['Emoji Decode','emoji-status',t=>/^\d+\s*\/\s*10 correct/.test(t)]
   ];
   return tests.map(([game,id,accept])=>{
     const score=cleanText(id);
