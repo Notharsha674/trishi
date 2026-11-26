@@ -3,17 +3,28 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="trishi-build" content="2026-11-26-v7-more-surprises" />
+  <meta name="trishi-build" content="2026-11-26-v8-normal-bestie" />
   <meta name="theme-color" content="#c93d24" />
   <meta name="description" content="A tiny, very dramatic birthday surprise for Trishi!" />
   <title>For Trishi 💌 | A Birthday Surprise</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Caveat:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=7" />
-  <script src="script.js?v=7" defer></script>
+  <link rel="stylesheet" href="style.css?v=8" />
+  <script src="script.js?v=8" defer></script>
 </head>
-<body>
+<body data-scene="welcome">
+
+  <nav class="quick-nav" aria-label="Quick navigation">
+    <button type="button" id="nav-toggle" aria-expanded="false" aria-controls="nav-options">☰ Menu</button>
+    <div class="nav-options" id="nav-options" hidden>
+      <button type="button" data-go="welcome">Start</button>
+      <button type="button" data-go="gifts">Gifts</button>
+      <button type="button" data-go="memories">Photos</button>
+      <button type="button" data-go="letter">Note</button>
+      <button type="button" data-go="final">Final wish</button>
+    </div>
+  </nav>
   <main class="stage" id="stage">
     <!-- WELCOME (0) -->
     <section class="scene is-active" id="welcome" aria-label="Birthday surprise welcome">
@@ -55,7 +66,7 @@
     </section>
 
     <!-- GIFTS HOME (3) -->
-    <section class="scene" id="gifts" aria-label="Three gift boxes and a secret surprise" hidden>
+    <section class="scene" id="gifts" aria-label="Three birthday gifts" hidden>
       <div class="paper default-paper">
         <svg class="arc-text gift-arc" viewBox="0 0 1000 190" aria-label="Each gift has something for you" role="img">
           <defs><path id="gift-path" d="M 38 163 Q 500 -10 962 163" /></defs>
@@ -66,8 +77,7 @@
           <button type="button" class="gift" data-go="memories" aria-label="Open gift two, memories"><img src="assets/gift2.png" alt="Pink gift box with red bow"/><span class="gift-label">gift 2</span></button>
           <button type="button" class="gift" data-go="letter" aria-label="Open gift three, letter"><img src="assets/gift3.png" alt="Pink gift box with red bow"/><span class="gift-label">gift 3</span></button>
         </div>
-        <button type="button" class="bonus-gift" data-go="secret" aria-label="Open Ash’s secret fourth gift">✦ psst… secret gift bhi hai 👀</button>
-        <div class="gift-caption">GIFTS KHOLO, MADAM ♡</div>
+        <div class="gift-caption">CHOOSE A GIFT</div>
         <button type="button" class="next-arrow gift-next" data-go="final" aria-label="See final wish">❯</button>
       </div>
     </section>
@@ -81,7 +91,7 @@
             <div class="sparkle">✦ ✧</div>
             <p class="birthday-cap">HAPPY</p>
             <h1 class="birthday-script">Birthday</h1>
-            <p class="birthday-wish">Happy Birthday, Yeon! Aaj no stress, only cake, bakbak aur unlimited main-character energy. Tu deserve karti hai all the good things. 💗</p>
+            <p class="birthday-wish">Happy birthday, Trishi! Wishing you good days, less stress and more things to look forward to. Cake ka photo bhejna. — Ash</p>
             <div class="ribbon" data-name>Trishi</div>
           </div>
           <div class="polaroid big-polaroid tilt-right"><div class="photo-fill"><img src="assets/birthday-photo.jpg" alt="Your birthday person's photo" onerror="this.style.display='none'"/><span>♡<small>TRISHI ♡</small></span></div><div class="polaroid-name">birthday girl ♡</div><i class="photo-clip" aria-hidden="true"></i></div>
@@ -97,7 +107,7 @@
       <div class="accent-corner"></div>
       <div class="paper accent-paper cake-paper">
         <h1 class="cake-heading">MAKE A WISH</h1>
-        <div class="scribble cake-left">i love<br/>you ♡</div>
+        <div class="scribble cake-left">cake ka<br/>share?</div>
         <div class="scribble cake-confetti" aria-hidden="true">❃ ∘ ∿ ⋆</div>
         <button type="button" class="cake-graphic" id="cake-click" aria-label="Blow out the birthday candles">
           <div class="candles" aria-hidden="true">
@@ -118,7 +128,7 @@
     <section class="scene memories-scene" id="memories" aria-label="Birthday memories gallery" hidden>
       <div class="memories-paper">
         <h1 class="memories-title" aria-label="Memories"><span>m</span><span>E</span><span>m</span><span>O</span><span>r</span><span>i</span><span>E</span><span>S</span></h1>
-        <p class="memory-hint">Photos pe tap karo, zoom karke dekho ♡</p><div class="memory-string" aria-hidden="true"></div>
+        <p class="memory-hint">Tap a photo to enlarge</p><div class="memory-string" aria-hidden="true"></div>
         <div class="memory-gallery">
           <div class="memory-card m1"><i class="peg"></i><div class="memory-photo p1"><img src="assets/memory1.jpg" onerror="this.style.display='none'" alt="Your memory photo 1"/><span>our first<br/>memory ♡</span></div><small>the beginning ✿</small></div>
           <div class="memory-card m2"><i class="peg"></i><div class="memory-photo p2"><img src="assets/memory2.jpg" onerror="this.style.display='none'" alt="Your memory photo 2"/><span>bestie<br/>energy ✨</span></div><small>always laughing</small></div>
@@ -126,7 +136,7 @@
           <div class="memory-card m4"><i class="peg"></i><div class="memory-photo p4"><img src="assets/memory5.jpg" onerror="this.style.display='none'" alt="Your memory photo 4"/><span>favourite<br/>days 💗</span></div><small>more of these!</small></div>
           <div class="memory-card m5"><i class="peg"></i><div class="memory-photo p5"><img src="assets/memory6.jpg" onerror="this.style.display='none'" alt="Your memory photo 5"/><span>love this<br/>memory ♡</span></div><small>forever-ish</small></div>
         </div>
-        <div class="memory-pager" aria-label="Memories photo pages"><button type="button" id="mem-prev" aria-label="Previous memories">‹</button><span id="mem-page" aria-live="polite">1 / 2</span><button type="button" id="mem-next" aria-label="More memories">›</button></div>
+        <div class="memory-pager" aria-label="Memories photo pages"><button type="button" id="mem-prev" aria-label="Previous memories">‹</button><span id="mem-page" aria-live="polite">1 / 2</span><button type="button" id="mem-next" aria-label="More memories">›</button><button type="button" id="mem-random" aria-label="View a random memory" title="Random memory">Random</button></div>
         <div class="ribbon-bow bow-left" aria-hidden="true">✻</div><div class="ribbon-bow bow-right" aria-hidden="true">✻</div>
         <button type="button" class="memory-back nav-back" data-go="gifts">‹ BACK TO GIFTS</button>
       </div>
@@ -136,40 +146,28 @@
     <section class="scene letter-scene" id="letter" aria-label="A special birthday letter" hidden>
       <div class="letter-sheet">
         <div class="letter-binding" aria-hidden="true"></div>
-        <h1 class="letter-script">My fav person...</h1>
-        <p class="scroll-nudge">scroll karna , poori novel likhi hai ↓</p><div class="letter-progress" id="letter-progress" role="progressbar" aria-label="Letter reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="letter-progress-fill"></span></div>
+        <h1 class="letter-script">A note from Ash</h1>
+        <p class="scroll-nudge">Haan, letter thoda lamba hai. Scroll ↓</p><div class="letter-progress" id="letter-progress" role="progressbar" aria-label="Letter reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="letter-progress-fill"></span></div><button type="button" class="copy-letter" id="copy-letter">Copy note</button>
         <div class="heart-stamp" aria-hidden="true">❤</div>
         <div class="letter-scroll">
           <h2>Dear Trishi (chudail Yeon),</h2>
           <div class="letter-body" id="personal-letter">
-            <p>Happy birthdayyyyyyy pagli 😭💗 Haan haan, aaj officially tera din hai, toh aaj ke liye tujhe thoda extra attitude allowed hai. BAS thoda. Already normal din pe itna attitude hota hai, birthday pe full celebrity banne ki zaroorat nahi hai, samjhi?</p>
-            <p>Sabse pehle ek baat: YES, maine tere liye poori website banayi hai. Website. Literally. Matlab log ek “hbd” text bhejke so jaate hain aur idhar Ash ne HTML, CSS, GIF, cake, gifts sab laga diya. Toh zara do second ke liye apni nautanki side mein rakh aur bol “wah Ash, kya talent hai.” Thank you. 😌</p>
-            <p>Aur tu soch rahi hogi itni mehnat kyun? Kyunki normal boring birthday wish tere liye bilkul bhi kaafi nahi thi. Tu khud boring hai kya? Nahi na. Tu toh ek walking talking plot twist hai. Kabhi full angel, kabhi full chudail, aur kabhi dono ek hi minute mein. Talent bolte hain usko. 😭</p>
-            <p>Waise ek sach bolun? Teri photos dekhte dekhte main emotional hone lagi thi… phir yaad aaya ye wahi insaan hai jo do minute mein mera patience khatam kar sakta hai. Bachpan mein kitni innocent lag rahi thi aur ab dekho… chudail Yeon unlocked. Character development truly shocking.</p>
-            <p>Teri chhoti wali pics genuinely so cute hain yaar. Little hat, tiny expressions, school wali photos — ekdum mini main-character. Aur ab bhi tu apni story ki main character hi hai, bas background music ke saath free mein extra drama bhi aata hai. Refund nahi milega.</p>
-            <p>Okay jokes aside. I hope tujhe pata hai ki tu mere liye kitni important hai. Hum har baat pe serious nahi hote, aur honestly woh achha hi hai. Kabhi random nonsense, kabhi weird jokes, kabhi bina reason ek dusre ko roast karna… ussi mein toh apni bestie wali vibe hai.</p>
-            <p>Mujhe acha lagta hai ki tu apne aap ko filter karke dikhane ki koshish nahi karti. Jo mann mein hai bol deti hai, kabhi zyada hi bol deti hai (haan, ye roast hai), but that is literally you. Aur mujhe yehi version pasand hai — thoda crazy, thoda soft, thoda impossible, bilkul original.</p>
-            <p>Tere saath ek normal conversation bhi somehow ek episode ban sakti hai. Baat shuru hoti hai “sun na” se, aur phir pata nahi hum kis planet pe pahunch jaate hain. Kabhi gossip, kabhi life ki planning, kabhi ekdum faltu topic pe serious debate. Aur phir dono ko hasi aa jaati hai ki hum kar kya rahe hain.</p>
-            <p>Sach mein, jab kabhi din weird sa lagta hai, ek familiar insaan ka silly message bhi mood light kar deta hai. I hope main bhi tere liye kabhi kabhi woh person ban paati hoon. Har waqt perfect words nahi milte, but jab zaroorat ho toh main try zaroor karungi. Pakka.</p>
-            <p>Is birthday pe meri sabse badi wish koi filmy cheez nahi hai. Bas tu genuinely khush rahe. Woh wali khushi jo photo ke liye smile karne se alag hoti hai. Jahan tu khud se comfortable feel kare, bina kisi ko kuch prove kiye, bina unnecessary stress liye.</p>
-            <p>Jo cheezein tu quietly chahti hai na, I hope unke liye tujhe sahi chances milen. Jo goals hain unpe tu apne pace pe aage badhe. Aur jo bhi mushkil phase aaye, usme apne aap ko akela mat samajhna. Sab cheezein ek din mein solve nahi hoti, but dheere dheere things can get better.</p>
-            <p>Aur please, khud pe kabhi bhi unnecessary pressure mat daalna. Tujhe har din sorted, productive, pretty, funny, genius sab kuch ek saath banne ki koi zaroorat nahi. Kuch din bas survive karna bhi enough hota hai. Baaki din hum extra bakbak karke compensate kar lenge.</p>
-            <p>Kabhi tera mood off ho, toh “main theek hoon” bolke sabko confuse mat karna. Baat karni ho toh kar lena, nahi karni ho toh woh bhi okay. Tu kisi ki entertainment duty pe nahi hai. Tujhe quiet days aur stupid-funny days dono milne chahiye.</p>
-            <p>Waise ek complaint mere paas permanently registered hai: tera “2 minute” universe ke saare clocks se alag kaam karta hai. NASA ko research karni chahiye. Tujhe reply dene se pehle kabhi kabhi calendar kholna padta hai. Lekin koi nahi, aaj birthday hai toh case temporarily withdraw kar rahi hoon. 😤</p>
-            <p>Ek aur complaint — tu itni effortlessly roast material deti hai ki mujhe mehnat hi nahi karni padti. Main ek joke sochti hoon aur tu khud usse bhi funny kuch kar deti hai. God bless this free content. Agar main kabhi comedy show karun na, special thanks mein “Chudail Yeon” likhungi.</p>
-            <p>Lekin seriously, tu jaisi hai na, waisi hi reh. Haan growth kar, naye experiences le, galtiyon se seekh, but kisi aur ko impress karne ke chakkar mein apni weird little spark mat khona. Duniya mein already bohot same-same log hain. Ek aur nahi chahiye.</p>
-            <p>Tere aas paas ache log rahein — jo tujhe respect dein, teri boundaries samjhein, teri achievements pe genuinely happy hon aur jab tu khud pe doubt kare tab tujhe yaad dilayein ki tu kitni capable hai. Aur jo bas timepass ke liye aayein unko politely exit mil jaaye. Door wahaan hai. 👋</p>
-            <p>Koi aisa bhi ho jo tere boring days ko judge na kare. Jo samjhe ki sab moments Instagram-worthy nahi hote. Kabhi bas ek chhoti si baat, favourite song, ya random joke bhi kaafi hota hai. I hope tere life mein aise simple, achhe moments bohot saare hon.</p>
-            <p>Aur birthdays mein ek weird thing hoti hai na — hum sochte hain ab next year kitna different hoga. Mujhe nahi pata next year exactly kya hoga. Bas yeh hope karti hoon ki jab tu peeche mudke dekhe toh bol sake, “haan yaar, kuch nice cheezein hui thi.” Even the tiny wins count.</p>
-            <p>Ab gift boxes ka audit: pehla tere liye birthday card, doosra memories, teesra ye never-ending letter. Main jaanti hoon tu ab tak soch rahi hogi “Ash, itna kaun likhta hai?” Main. Obviously. Ek baar start ho gayi toh rukna mushkil hai. Tu bhi toh aisi hi hai na. 😭</p>
-            <p>Cake pe wish maangte waqt ek wish mere naam bhi kar sakti thi, just saying. Joke joke. Ya shayad nahi. Waise mere liye cake ka bada wala piece rakhna. Aur sirf photo bhejke mat jalana. Aisa kiya toh agle saal website nahi, direct roast PowerPoint banega.</p>
-            <p>Aur haan, jab tu iss website ke beech mein Shinchan ko dance karte dekhe na, understand ki uska job bhi tujhe wish karna hai. Bechara mere saath project pe overtime kar raha hai. Usko bhi birthday cake ka piece de dena. Red shirt wala worker deserves recognition.</p>
-            <p>Kabhi kabhi main feelings bolne ke bajaye jokes maar deti hoon. Toh iss baar clearly likh rahi hoon: I am really glad tu meri life mein hai. Tera existence mere liye meaningful hai. Tujhe celebrate karna chahiye — sirf birthday pe nahi, regular Tuesdays pe bhi. Haan, even jab tu annoying ho.</p>
-            <p>Har baar long emotional paragraph ka reply equally long hona zaroori nahi, okay? Bas itna ki tujhe read karke thodi si smile aaye, aur tu apni birthday wali feeling enjoy kare. Aur please fake “aww” mat bolna. Genuine “aww” approved hai. 😌</p>
-            <p>So birthday girl, aaj achha khana kha, cake kaat, apne favourite logon ke saath time spend kar, music sun, photos le, aur khud ko thoda treat de. Kal se phir normal duniya aur teri bakbak. But aaj ka din thoda special rehne de.</p>
-            <p>Finallyyyy, wishing you happy days, peace of mind, stupid jokes that make you laugh too hard, real friendships, enough courage for new things, and so many small moments that feel like sunshine. Yeon, take care of yourself yaar. Aur mere liye thoda extra hass lena.</p>
-            <p>Okay bas, main zyada emotional ho rahi hoon toh image kharab ho jaayegi. Happy birthday once again, chudail Yeon. Stay weird, stay happy, aur haan website ke liye mujhe 5-star rating chahiye. No negotiations. 💗</p>
-            <p class="love-you">happy bdy, kutti. — Ash ♡</p>
+            <p>Happy birthday, Trishi! Haan, chudail Yeon bhi chalega. Socha simple message bhej dun, but phir idea aaya ki website bana dete hain. Ab bana hi di hai, toh thoda appreciation toh banta hai.</p>
+            <p>First of all, I hope tera birthday achha jaaye. Good food, achhe log, favourite music, aur aaram se din enjoy kar. Kuch extraordinary karna zaroori nahi. Jo tujhe accha lage, wahi kar.</p>
+            <p>Purani photos select karte waqt ek baat notice hui: bachpan mein kitni seedhi lag rahi thi. Ab personality mein updates kaafi aa gaye hain. Yeon version 2.0 has entered the chat.</p>
+            <p>Har photo alag phase ki hai. Kahi school uniform, kahi serious expression, kahi proper attitude. Kuch photos dekhke hasi aayi, aur kuch dekhke bas laga ki time kitni jaldi nikal gaya.</p>
+            <p>Waise ek ordinary birthday wish ke liye HTML, CSS aur JavaScript use karna thoda extra hai. Mujhe pata hai. But ye fun project bhi tha aur tere liye kuch different karna tha. Ab bugs pakad kar meri class mat lena.</p>
+            <p>Apni dosti ki funny baat ye hai ki kabhi kisi normal topic pe shuru hoti hai aur do minute mein pata nahi kahan pahunch jaati hai. Sometimes random jokes, sometimes actual discussions, sometimes complete nonsense.</p>
+            <p>Best part? Har baar perfect conversation karne ki zaroorat nahi. Memes bhej do, kuch ajeeb sa observation share kar do, ya bas thodi bakbak. Dosti mein ye sab normal hona chahiye.</p>
+            <p>Haan tu kabhi kabhi annoying ho sakti hai. Official review hai ye. But tu funny bhi hai, direct bhi, aur achhi friend bhi. Bas birthday ke naam pe ego ko zyada mat badha lena.</p>
+            <p>Seriously though, I hope iss year jo bhi plans hain tere, unmein progress mile. Ho sakta hai sab kuch exactly plan ke according na chale, but I hope tu achhi opportunities pakde aur apna pace maintain kare.</p>
+            <p>Achhe log milen, interesting experiences hon, aur aise moments bhi aayen jahan bina kisi pressure ke just enjoy kar sake. Boring days bhi life ka part hain, unmein kuch galat nahi.</p>
+            <p>Kabhi things hectic ho jaayein toh break lena. Humesha sab kuch sorted rakhna possible nahi hota. Jo important hai uske liye time nikaal, aur baaki sab mein thoda chill.</p>
+            <p>Ab roast section. Ye letter itna lamba ho gaya hai ki mujhe khud samajh nahi aa raha ye birthday wish hai ya college assignment. Agar end tak pahunch gayi toh congratulations, patience level unlocked.</p>
+            <p>Shinchan ne bhi kaafi mehnat ki hai. Banda har screen pe reactions de raha hai. Usko imaginary cake ka ek slice milna chahiye. Website ke team members ki respect karo.</p>
+            <p>Three gifts rakhe hain: birthday card, photos, aur ye letter. Koi dramatic confession ya filmy twist nahi. Bas ek bestie ka thoda over-engineered birthday surprise.</p>
+            <p>Toh happy birthday again. I hope this year better ho, and you get more reasons to laugh. Apne plans enjoy kar, achha cake kha, aur gallery ke photos pe complain mat karna.</p>
+            <p>Aur haan, is website ko rate karna. Agar sirf 'nice' bolke chali gayi toh main samajh jaungi ki tujhe coding effort ka appreciation course karna padega. — Ash</p>
             <p class="closing-joke">bass bakwas lika hai kuch bhi lik diya.</p>
           </div>
         </div>
@@ -182,28 +180,12 @@
     <section class="scene accent-scene" id="final" aria-label="Final birthday wish" hidden>
       <div class="accent-corner"></div>
       <div class="paper accent-paper final-paper">
-        <div class="final-message">Yeon, iss saal tere<br>saare dreams poore ho.<br>Aur haan, drama thoda kam…<br>(okay, impossible 😭) ♡</div>
+        <div class="final-message">Happy birthday, Trishi!<br>More good days, less stress,<br>aur achhi memories.<br><span class="final-signoff">— Ash</span></div>
         <img referrerpolicy="no-referrer" loading="eager" decoding="async" src="assets/shinchan_angry.gif" alt="Shinchan celebrating" class="final-shinchan" />
         <button type="button" class="replay-link" data-go="welcome">↻ SEE IT AGAIN</button>
       </div>
     </section>
 
-    <section class="scene accent-scene" id="secret" aria-label="Secret bonus birthday gift" hidden>
-      <div class="accent-corner"></div>
-      <div class="paper accent-paper secret-paper">
-        <div class="secret-stamp">✦ TOP SECRET — BY ASH ✦</div>
-        <div class="secret-envelope" aria-hidden="true">💌</div>
-        <h1 class="secret-heading">OYE, CHUDAIL YEON! 😭</h1>
-        <p class="secret-intro">Tujhe laga bas teen gifts hain? Ash ka secret bonus abhi baaki hai, madam. 😌</p>
-        <button type="button" id="secret-open" class="secret-open" aria-expanded="false" aria-controls="secret-reveal">OPEN THE SECRET ♡</button>
-        <div id="secret-reveal" class="secret-reveal" aria-live="polite" hidden>
-          <strong>OFFICIAL VIP BESTIE PASS 🎟️</strong>
-          <p>Unlimited bakbak, free roasting, emergency memes aur har drama ke liye reserved audience. Subscription cancel nahi hoga, chudail. 😭</p>
-          <small>Terms: cake mein Ash ka share compulsory. — by ash ♡</small>
-        </div>
-        <button type="button" class="nav-back secret-back" data-go="gifts">‹ BACK TO GIFTS</button>
-      </div>
-    </section>
   </main>
   <div class="gif-credit" aria-hidden="true">Shinchan animation from the birthday reference video ♡</div>
   <div class="confetti-container" id="confetti" aria-hidden="true"></div>
@@ -218,7 +200,7 @@
   </div>
   <div class="song-player" role="group" aria-label="Birthday background music">
     <button type="button" id="music-button" aria-label="Play birthday song" aria-pressed="false">♫ <span id="music-label">Play song</span></button>
-    <span class="song-player-tip">Kabhi Kabhi Aditi ♡</span>
+    <span class="song-player-tip">Kabhi Kabhi Aditi</span><label class="volume-wrap" for="volume-slider">Vol <input type="range" id="volume-slider" min="0" max="100" value="44" aria-label="Music volume"></label>
   </div>
   <audio id="birthday-audio" autoplay loop preload="auto"><source src="Lyrical_Kabhi_Kabhi_Aditi_Zindagi_Jaane_Tu_Ya_Jaane_Na_A_R_Ra.m4a" type="audio/mp4"></audio>
 <div class="ash-signature" role="note" aria-label="Made by Ash"><span class="ash-signature-star">✦</span> by <strong>ash</strong> ♡</div>
