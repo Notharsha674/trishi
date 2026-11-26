@@ -299,7 +299,7 @@ root.querySelectorAll('[data-plan]').forEach(b=>b.addEventListener('click',()=>{
 // A local-only rating. Never sends ratings or personal data anywhere.
 const ratingButtons=Array.from(root.querySelectorAll('[data-rate]'));
 function showRating(value){
-  ratingButtons.forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.rate)===value)));
+  ratingButtons.forEach(b=>{const n=Number(b.dataset.rate);b.setAttribute('aria-pressed',String(n<=value && value>0));b.setAttribute('aria-label',n+' out of 5 stars');});
   el('rating-output').textContent=value?value+' / 5 saved on this device. Thanks!':'Pick a rating.';
 }
 ratingButtons.forEach(b=>b.addEventListener('click',()=>{
