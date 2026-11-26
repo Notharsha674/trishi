@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="robots" content="noindex,nofollow"/>
+  <title>Ash's Private Birthday Dashboard</title>
+  <link rel="stylesheet" href="responses.css?v=1"/>
+  <script defer src="response-config.js?v=1"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script defer src="ash-dashboard.js?v=1"></script>
+</head>
+<body class="ash-admin">
+  <main class="admin-wrap">
+    <header class="admin-head">
+      <div>
+        <p class="admin-eyebrow">TRISHI / YEON — BY ASH</p>
+        <h1>Private submissions</h1>
+        <p>Only answers or scores the visitor chose to send. This page requires Ash's email sign-in.</p>
+      </div>
+      <a class="admin-back" href="./index.html">← Birthday website</a>
+    </header>
+    <section class="admin-card" id="admin-setup" hidden>
+      <h2>Finish connecting Supabase</h2>
+      <p>The dashboard is installed, but the public Supabase URL and publishable key still need to be added to <code>response-config.js</code>. Do not put secrets in that file.</p>
+    </section>
+    <section class="admin-card" id="admin-login" hidden>
+      <h2>Sign in as Ash</h2>
+      <p>Enter the email address registered for your Supabase project. A secure sign-in link will be emailed to you.</p>
+      <form id="admin-login-form" class="admin-form">
+        <label>Email <input id="admin-email" type="email" autocomplete="email" placeholder="you@example.com" required/></label>
+        <button type="submit">Email me a sign-in link</button>
+      </form>
+      <p id="admin-login-status" role="status" aria-live="polite"></p>
+    </section>
+    <section class="admin-card" id="admin-denied" hidden>
+      <h2>Owner access not set up</h2>
+      <p>You're signed in, but this Supabase Auth account has not been added as an owner. In Supabase Authentication → Users, find your UUID, then run the owner INSERT shown in <code>SETUP-PRIVATE-DASHBOARD.md</code>.</p>
+      <button type="button" id="admin-denied-logout">Sign out</button>
+    </section>
+    <section id="admin-content" hidden>
+      <div class="admin-tools">
+        <div>
+          <h2>Submitted responses</h2>
+          <p id="admin-count">Loading…</p>
+        </div>
+        <div class="admin-actions">
+          <button type="button" id="admin-refresh">Refresh</button>
+          <button type="button" id="admin-export">Export JSON</button>
+          <button type="button" id="admin-signout">Sign out</button>
+        </div>
+      </div>
+      <div class="admin-filters">
+        <label>Filter <select id="admin-filter">
+          <option value="all">All</option><option value="choices">Choices</option>
+          <option value="scores">Game scores</option><option value="rating">Ratings</option>
+        </select></label>
+      </div>
+      <div id="admin-results" class="admin-results" aria-live="polite"></div>
+      <p class="admin-note">Data stays in your private Supabase table. This site does not collect addresses, location, or browsing activity. Don't forward private responses without permission.</p>
+    </section>
+  </main>
+</body>
+</html>
