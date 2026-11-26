@@ -1,6 +1,26 @@
 # Set up Ash's private birthday dashboard and email alerts
 
-**Status:** GitHub contains the website and backend source. This is NOT live until you connect Supabase and Resend. No answer is sent unless the visitor chooses categories, reviews them, enters the invite code, checks consent, and presses Send.
+## Current setup status — November 26, 2026
+
+Already completed in your Supabase organization **ash**:
+- Project **trishi-birthday** created in Mumbai (ap-south-1); project creation was quoted at **$0/month**
+- Project URL: https://wxykjurpzrxikugqyrgp.supabase.co
+- Both private tables created and Row Level Security checked
+- Submit-birthday Edge Function deployed (ACTIVE, version 1)
+- Public project URL and publishable key added to GitHub response-config.js
+- Public users have neither SELECT nor INSERT grants on the response tables
+
+**Still required before any real answer can be delivered:**
+- Sign in with your own email at the dashboard, then authorize the resulting Auth UUID as owner
+- Add a strong SUBMISSION_INVITE_CODE using the Supabase Edge Functions Secrets UI (do not commit it to GitHub)
+- Configure RESEND_API_KEY, ALERT_TO_EMAIL and ALERT_FROM_EMAIL after setting up Resend; verified sender required
+- Allow the exact dashboard redirect URL in Supabase Auth settings
+- Run a real end-to-end consent-based submission test after those settings are complete
+
+Until the invite code secret exists, the function will reject every submission. Do not send Trishi the submission link before setup is complete.
+
+
+**Status:** Supabase project, tables, function and public website connection are configured. Owner authorization, invite-code secret and Resend notifications remain to be completed. No answer is sent unless the visitor chooses categories, reviews them, enters the invite code, checks consent, and presses Send.
 
 ## 1. Create Supabase and its private tables
 
