@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="trishi-build" content="2026-11-22-memory-prefetch-v6" />
+  <meta name="trishi-build" content="2026-11-26-v7-more-surprises" />
   <meta name="theme-color" content="#c93d24" />
   <meta name="description" content="A tiny, very dramatic birthday surprise for Trishi!" />
   <title>For Trishi 💌 | A Birthday Surprise</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chewy&family=Caveat:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css?v=6" />
-  <script src="script.js?v=6" defer></script>
+  <link rel="stylesheet" href="style.css?v=7" />
+  <script src="script.js?v=7" defer></script>
 </head>
 <body>
   <main class="stage" id="stage">
@@ -55,7 +55,7 @@
     </section>
 
     <!-- GIFTS HOME (3) -->
-    <section class="scene" id="gifts" aria-label="Three surprise gift boxes" hidden>
+    <section class="scene" id="gifts" aria-label="Three gift boxes and a secret surprise" hidden>
       <div class="paper default-paper">
         <svg class="arc-text gift-arc" viewBox="0 0 1000 190" aria-label="Each gift has something for you" role="img">
           <defs><path id="gift-path" d="M 38 163 Q 500 -10 962 163" /></defs>
@@ -66,6 +66,7 @@
           <button type="button" class="gift" data-go="memories" aria-label="Open gift two, memories"><img src="assets/gift2.png" alt="Pink gift box with red bow"/><span class="gift-label">gift 2</span></button>
           <button type="button" class="gift" data-go="letter" aria-label="Open gift three, letter"><img src="assets/gift3.png" alt="Pink gift box with red bow"/><span class="gift-label">gift 3</span></button>
         </div>
+        <button type="button" class="bonus-gift" data-go="secret" aria-label="Open Ash’s secret fourth gift">✦ psst… secret gift bhi hai 👀</button>
         <div class="gift-caption">GIFTS KHOLO, MADAM ♡</div>
         <button type="button" class="next-arrow gift-next" data-go="final" aria-label="See final wish">❯</button>
       </div>
@@ -117,7 +118,7 @@
     <section class="scene memories-scene" id="memories" aria-label="Birthday memories gallery" hidden>
       <div class="memories-paper">
         <h1 class="memories-title" aria-label="Memories"><span>m</span><span>E</span><span>m</span><span>O</span><span>r</span><span>i</span><span>E</span><span>S</span></h1>
-        <div class="memory-string" aria-hidden="true"></div>
+        <p class="memory-hint">Photos pe tap karo, zoom karke dekho ♡</p><div class="memory-string" aria-hidden="true"></div>
         <div class="memory-gallery">
           <div class="memory-card m1"><i class="peg"></i><div class="memory-photo p1"><img src="assets/memory1.jpg" onerror="this.style.display='none'" alt="Your memory photo 1"/><span>our first<br/>memory ♡</span></div><small>the beginning ✿</small></div>
           <div class="memory-card m2"><i class="peg"></i><div class="memory-photo p2"><img src="assets/memory2.jpg" onerror="this.style.display='none'" alt="Your memory photo 2"/><span>bestie<br/>energy ✨</span></div><small>always laughing</small></div>
@@ -125,7 +126,7 @@
           <div class="memory-card m4"><i class="peg"></i><div class="memory-photo p4"><img src="assets/memory5.jpg" onerror="this.style.display='none'" alt="Your memory photo 4"/><span>favourite<br/>days 💗</span></div><small>more of these!</small></div>
           <div class="memory-card m5"><i class="peg"></i><div class="memory-photo p5"><img src="assets/memory6.jpg" onerror="this.style.display='none'" alt="Your memory photo 5"/><span>love this<br/>memory ♡</span></div><small>forever-ish</small></div>
         </div>
-        <div class="memory-pager" aria-label="Memories photo pages"><button type="button" id="mem-prev" aria-label="Previous memories">‹</button><span id="mem-page" aria-live="polite">1 / 3</span><button type="button" id="mem-next" aria-label="More memories">›</button></div>
+        <div class="memory-pager" aria-label="Memories photo pages"><button type="button" id="mem-prev" aria-label="Previous memories">‹</button><span id="mem-page" aria-live="polite">1 / 2</span><button type="button" id="mem-next" aria-label="More memories">›</button></div>
         <div class="ribbon-bow bow-left" aria-hidden="true">✻</div><div class="ribbon-bow bow-right" aria-hidden="true">✻</div>
         <button type="button" class="memory-back nav-back" data-go="gifts">‹ BACK TO GIFTS</button>
       </div>
@@ -136,7 +137,7 @@
       <div class="letter-sheet">
         <div class="letter-binding" aria-hidden="true"></div>
         <h1 class="letter-script">My fav person...</h1>
-        <p class="scroll-nudge">scroll karna , poori novel likhi hai ↓</p>
+        <p class="scroll-nudge">scroll karna , poori novel likhi hai ↓</p><div class="letter-progress" id="letter-progress" role="progressbar" aria-label="Letter reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="letter-progress-fill"></span></div>
         <div class="heart-stamp" aria-hidden="true">❤</div>
         <div class="letter-scroll">
           <h2>Dear Trishi (chudail Yeon),</h2>
@@ -186,11 +187,35 @@
         <button type="button" class="replay-link" data-go="welcome">↻ SEE IT AGAIN</button>
       </div>
     </section>
+
+    <section class="scene accent-scene" id="secret" aria-label="Secret bonus birthday gift" hidden>
+      <div class="accent-corner"></div>
+      <div class="paper accent-paper secret-paper">
+        <div class="secret-stamp">✦ TOP SECRET — BY ASH ✦</div>
+        <div class="secret-envelope" aria-hidden="true">💌</div>
+        <h1 class="secret-heading">OYE, CHUDAIL YEON! 😭</h1>
+        <p class="secret-intro">Tujhe laga bas teen gifts hain? Ash ka secret bonus abhi baaki hai, madam. 😌</p>
+        <button type="button" id="secret-open" class="secret-open" aria-expanded="false" aria-controls="secret-reveal">OPEN THE SECRET ♡</button>
+        <div id="secret-reveal" class="secret-reveal" aria-live="polite" hidden>
+          <strong>OFFICIAL VIP BESTIE PASS 🎟️</strong>
+          <p>Unlimited bakbak, free roasting, emergency memes aur har drama ke liye reserved audience. Subscription cancel nahi hoga, chudail. 😭</p>
+          <small>Terms: cake mein Ash ka share compulsory. — by ash ♡</small>
+        </div>
+        <button type="button" class="nav-back secret-back" data-go="gifts">‹ BACK TO GIFTS</button>
+      </div>
+    </section>
   </main>
   <div class="gif-credit" aria-hidden="true">Shinchan animation from the birthday reference video ♡</div>
   <div class="confetti-container" id="confetti" aria-hidden="true"></div>
   <p class="rotate-tip" id="rotate-tip">↻ Rotate your phone for the closest look to the video.</p>
 
+
+  <div id="memory-zoom" class="memory-zoom" role="dialog" aria-modal="true" aria-label="Enlarged memory photo" hidden>
+    <button type="button" id="zoom-close" class="zoom-close" aria-label="Close photo">×</button>
+    <button type="button" id="zoom-prev" class="zoom-arrow" aria-label="Previous photo">‹</button>
+    <figure class="zoom-figure"><img id="zoom-image" src="" alt="Memory photo" /><figcaption id="zoom-caption"></figcaption></figure>
+    <button type="button" id="zoom-next" class="zoom-arrow" aria-label="Next photo">›</button>
+  </div>
   <div class="song-player" role="group" aria-label="Birthday background music">
     <button type="button" id="music-button" aria-label="Play birthday song" aria-pressed="false">♫ <span id="music-label">Play song</span></button>
     <span class="song-player-tip">Kabhi Kabhi Aditi ♡</span>
