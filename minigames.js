@@ -301,4 +301,20 @@
   }));
   const watcher=new MutationObserver(()=>{if(funScene.hidden)cleanup()});
   watcher.observe(funScene,{attributes:true,attributeFilter:['hidden']});
+
+
+  // Game picker: jump to a real board, instead of making visitors scroll through every card.
+  const gameScroller=document.getElementById('fun-body');
+  document.querySelectorAll('[data-game-jump]').forEach(button=>{
+    button.addEventListener('click',()=>{
+      const target=document.getElementById(button.dataset.gameJump);
+      if(!target||!gameScroller)return;
+      const targetRect=target.getBoundingClientRect();
+      const scrollRect=gameScroller.getBoundingClientRect();
+      const reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      gameScroller.scrollBy({top:targetRect.top-scrollRect.top-12,behavior:reduceMotion?'auto':'smooth'});
+      target.classList.add('game-card-highlight');
+      window.setTimeout(()=>target.classList.remove('game-card-highlight'),1500);
+    });
+  });
 })();
