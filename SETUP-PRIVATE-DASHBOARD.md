@@ -15,6 +15,7 @@ Already completed in your Supabase organization **ash**:
 - Add a strong SUBMISSION_INVITE_CODE using the Supabase Edge Functions Secrets UI (do not commit it to GitHub)
 - Configure RESEND_API_KEY, ALERT_TO_EMAIL and ALERT_FROM_EMAIL after setting up Resend; verified sender required
 - Allow the exact dashboard redirect URL in Supabase Auth settings
+- After owner authorization and invite-code setup, set submissionsEnabled: true in the PUBLIC response-config.js file (this flag is not a secret)
 - Run a real end-to-end consent-based submission test after those settings are complete
 
 Until the invite code secret exists, the function will reject every submission. Do not send Trishi the submission link before setup is complete.
@@ -81,7 +82,7 @@ The function saves the selected results even if email sending is not configured.
 5. Press **Send selected results to Ash**.
 6. Sign in at https://notharsha674.github.io/trishi/ash-dashboard.html and press Refresh. Verify the answers, scores and email status.
 
-If the website says submissions are not connected, check response-config.js. If your invite code fails, check the function secret. If the dashboard works but email does not, check Resend secret, verified sender and recipient.
+If the website says submissions are not connected, check response-config.js and only turn submissionsEnabled on after adding your private invite code. If your invite code fails, check the function secret. If the dashboard works but email does not, check Resend secret, verified sender and recipient.
 
 ## Privacy and safety
 
