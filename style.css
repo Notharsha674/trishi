@@ -198,3 +198,30 @@
  .zoom-close{top:14px;right:14px}
 }
 @media(prefers-reduced-motion:reduce){.secret-envelope,.bonus-gift{animation:none!important}.zoom-figure img{transition:none}}
+
+
+/* Version 8: practical controls and normal bestie styling */
+.quick-nav{position:fixed;top:12px;left:12px;z-index:10000;font:700 13px/1.3 'DM Sans',Arial,sans-serif}
+#nav-toggle{background:#fff9ee;border:2px solid #b63d32;border-radius:999px;min-height:42px;padding:8px 16px;color:#9a2a27;box-shadow:0 3px 0 #a43d32}
+.nav-options{position:absolute;top:50px;left:0;display:flex;flex-direction:column;gap:2px;padding:9px;background:#fff8ee;border:2px solid #bf8278;border-radius:14px;min-width:143px;box-shadow:0 9px 16px #3c181833}
+.nav-options[hidden]{display:none!important}
+.nav-options button{border:0;background:transparent;text-align:left;padding:10px 12px;border-radius:7px;color:#8d3029;font:600 13px 'DM Sans',sans-serif}
+.nav-options button:hover,.nav-options button:focus-visible{background:#f8ddcf}
+body[data-scene="cake"] .quick-nav,body[data-scene="memories"] .quick-nav{display:none}
+.copy-letter{position:relative;z-index:5;display:block;margin:3px auto 7px;background:#fffcf4;border:1px solid #a9564e;border-radius:999px;color:#973831;padding:6px 14px;font:600 12px 'DM Sans',Arial,sans-serif}
+.copy-letter:hover{background:#f8e6db}
+#mem-random{font:700 12px/1.2 'DM Sans',Arial,sans-serif;min-width:65px;padding:6px 10px;background:#fdf5e8;color:#8f312d;border:1px solid #b98c85;border-radius:999px}
+#mem-random:hover{background:#f9dcd3}
+.volume-wrap{display:flex;align-items:center;gap:5px;color:#9c302b;font:600 11px 'DM Sans',Arial,sans-serif;white-space:nowrap}
+.volume-wrap input{width:65px;accent-color:#b51d21;cursor:pointer}
+.final-signoff{font:.48em 'DM Sans',Arial,sans-serif;letter-spacing:.02em}
+@media(max-width:720px) and (orientation:portrait){
+ .quick-nav{top:8px;left:8px}
+ #nav-toggle{min-height:36px;padding:6px 11px;font-size:11px}
+ .nav-options{top:43px}
+ .copy-letter{font-size:11px;padding:5px 12px}
+ .volume-wrap input{width:43px}
+ #mem-random{font-size:10px;min-width:56px;padding:6px}
+ .memory-pager{gap:5px}
+}
+@media(max-width:440px){.song-player-tip{display:none}.volume-wrap input{width:40px}}
