@@ -48,7 +48,7 @@ function currentRating(){
   return match?Number(match[1]):null;
 }
 const config=()=>window.TRISHI_RESPONSE_CONFIG||{};
-const configured=()=>/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/.test(config().supabaseUrl||'');
+const configured=()=>config().submissionsEnabled===true && /^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/.test(config().supabaseUrl||'');
 function selection(){
   return {
     choices:$('share-choices').checked?history.slice():[],
