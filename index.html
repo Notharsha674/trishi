@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="trishi-build" content="2026-11-26-v11-private-responses-ready" />
+  <meta name="trishi-build" content="2026-11-26-v12-14-arcade-games" />
   <meta name="theme-color" content="#c93d24" />
   <meta name="description" content="A tiny, very dramatic birthday surprise for Trishi!" />
   <title>For Trishi 💌 | A Birthday Surprise</title>
@@ -13,10 +13,12 @@
   <link rel="stylesheet" href="style.css?v=9" />
   <link rel="stylesheet" href="funzone.css?v=1" />
   <link rel="stylesheet" href="minigames.css?v=1" />
+  <link rel="stylesheet" href="arcade-plus.css?v=1" />
   <link rel="stylesheet" href="responses.css?v=1" />
   <script src="script.js?v=9" defer></script>
   <script src="funzone.js?v=1" defer></script>
   <script src="minigames.js?v=1" defer></script>
+  <script src="arcade-plus.js?v=1" defer></script>
   <script src="response-config.js?v=2" defer></script>
   <script src="response-submit.js?v=2" defer></script>
 </head>
@@ -204,7 +206,7 @@
         <header class="fun-header">
           <p class="fun-eyebrow">FROM ASH TO TRISHI</p>
           <h1 class="fun-title">MINI-GAMES 🎮</h1>
-          <p class="fun-subtitle">9 playable games, photos and some bakwas. Pick a game below.</p>
+          <p class="fun-subtitle">14 playable games, photos and some bakwas. Pick a game below.</p>
           <div class="fun-tabs" role="tablist" aria-label="Fun Zone categories">
             <button type="button" role="tab" data-fun-tab="games" aria-selected="true" class="selected">🎲 Games</button>
             <button type="button" role="tab" data-fun-tab="random" aria-selected="false">🎤 Random</button>
@@ -216,7 +218,7 @@
           <div class="fun-panel" data-fun-panel="games">
 
             <div class="game-picker" aria-label="Choose a mini-game">
-              <strong>Choose your game (9 playable):</strong>
+              <strong>Choose your game (14 playable):</strong>
               <button type="button" data-game-jump="game-ttt">⭕ Tic-Tac-Toe</button>
               <button type="button" data-game-jump="game-rps">✊ Rock Paper Scissors</button>
               <button type="button" data-game-jump="game-reaction">⚡ Reaction</button>
@@ -226,6 +228,17 @@
               <button type="button" data-game-jump="game-match">🃏 Memory Match</button>
               <button type="button" data-game-jump="game-tap">🎯 Tap Challenge</button>
               <button type="button" data-game-jump="game-choice">🎲 This or That</button>
+              <button type="button" data-game-jump="game-2048">🔢 2048</button>
+              <button type="button" data-game-jump="game-simon">🟦 Sequence Recall</button>
+              <button type="button" data-game-jump="game-typing">⌨️ Typing Sprint</button>
+              <button type="button" data-game-jump="game-math">➕ Math Dash</button>
+              <button type="button" data-game-jump="game-emoji">🤔 Emoji Decode</button>
+            </div>
+
+            <div class="fun-card wide">
+              <h2 class="arcade-heading">🏆 Your Local Arcade Records</h2>
+              <p>Your personal bests are saved in this browser only, not sent to Ash automatically.</p>
+              <div class="arcade-records" id="arcade-records" aria-live="polite"></div>
             </div>
             <div class="fun-grid">
               <article class="fun-card wide game-anchor" id="game-match">
@@ -301,6 +314,56 @@
                 </form>
                 <div class="fun-row"><button type="button" id="word-hint" class="fun-secondary">Hint</button><button type="button" id="word-skip" class="fun-secondary">Skip</button><button type="button" id="word-reset" class="fun-secondary">New game</button></div>
                 <p id="word-hint-text" class="word-hint"></p><p id="word-result" class="fun-status" aria-live="polite">Unscramble the letters.</p>
+              </article>
+
+              <article class="fun-card game-anchor" id="game-2048">
+                <h2>2048 — Number Merge</h2>
+                <p>Combine matching tiles to reach 2048. Use arrows on your keyboard, the buttons, or swipe on the board.</p>
+                <div class="fun-row"><span id="game2048-score" class="fun-status">Score: 0</span><span id="game2048-best" class="fun-status">Best: 0</span><button type="button" class="fun-secondary" id="game2048-reset">New game</button></div>
+                <div id="game2048-board" class="arcade-board2048" tabindex="0" aria-label="2048 numbered tiles; use arrow keys when focused"></div>
+                <div class="arcade-move-controls" role="group" aria-label="2048 direction controls">
+                  <button type="button" data-2048-move="up" aria-label="Move up">↑</button>
+                  <button type="button" data-2048-move="left" aria-label="Move left">←</button>
+                  <button type="button" data-2048-move="down" aria-label="Move down">↓</button>
+                  <button type="button" data-2048-move="right" aria-label="Move right">→</button>
+                </div>
+                <p class="fun-status" id="game2048-status" aria-live="polite">Start by merging numbers.</p>
+              </article>
+              <article class="fun-card game-anchor" id="game-simon">
+                <h2>Sequence Recall</h2>
+                <p>Watch which colours light up, then tap those colours in the same order. Each round adds one.</p>
+                <div class="fun-row"><button type="button" class="fun-action" id="simon-start">Play sequence</button><span id="simon-best" class="fun-status">Best: 0 rounds</span></div>
+                <div class="simon-pads" role="group" aria-label="Four colour sequence buttons">
+                  <button type="button" class="simon-pad" data-simon="0" aria-label="Red pad"></button>
+                  <button type="button" class="simon-pad" data-simon="1" aria-label="Yellow pad"></button>
+                  <button type="button" class="simon-pad" data-simon="2" aria-label="Green pad"></button>
+                  <button type="button" class="simon-pad" data-simon="3" aria-label="Blue pad"></button>
+                </div>
+                <p class="fun-status" id="simon-status" aria-live="polite">Press Play to start.</p>
+              </article>
+              <article class="fun-card game-anchor" id="game-typing">
+                <h2>30-Second Typing Sprint</h2>
+                <p>Type the sentence below. See your words per minute and accuracy. Your typed text never leaves this device.</p>
+                <div class="arcade-prompt" id="typing-prompt"></div>
+                <div class="fun-row"><span id="typing-time" class="fun-status">30.0s</span><span id="typing-best" class="fun-status">Best: 0 WPM</span><button type="button" class="fun-secondary" id="typing-reset">New sentence</button></div>
+                <textarea id="typing-input" class="arcade-textarea" autocomplete="off" autocorrect="off" spellcheck="false" aria-label="Type the displayed sentence" placeholder="Start typing here…"></textarea>
+                <p id="typing-result" class="fun-status" aria-live="polite">Clock starts when you type.</p>
+              </article>
+              <article class="fun-card game-anchor" id="game-math">
+                <h2>Math Dash</h2>
+                <p>Ten quick questions, four answers each. No timer.</p>
+                <div class="fun-row"><span id="math-best" class="fun-status">Best: 0/10</span><button type="button" class="fun-secondary" id="math-reset">New round</button></div>
+                <div id="math-question" class="arcade-question" aria-live="polite">Ready?</div>
+                <div id="math-options" class="arcade-options"></div>
+                <p id="math-status" class="fun-status">10 questions.</p>
+              </article>
+              <article class="fun-card game-anchor" id="game-emoji">
+                <h2>Emoji Decode</h2>
+                <p>Guess the phrase behind the emojis. Ten shuffled questions.</p>
+                <div class="fun-row"><span id="emoji-best" class="fun-status">Best: 0/10</span><button type="button" class="fun-secondary" id="emoji-reset">New round</button></div>
+                <div id="emoji-prompt" class="arcade-emoji" aria-label="Emoji clue">🍿 🎥</div>
+                <div id="emoji-options" class="arcade-options"></div>
+                <p id="emoji-status" class="fun-status" aria-live="polite">Choose an answer.</p>
               </article>
             </div>
           </div>
