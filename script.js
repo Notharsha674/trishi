@@ -23,6 +23,8 @@ function goTo(id) {
   next.classList.add('is-active');
   currentScene = id;
   if (id === 'cake') resetCake();
+  if (id === 'final') launchConfetti();
+  if (id === 'secret') resetSecretGift();
   if (id === 'letter') {const scroll = document.querySelector('.letter-scroll');if(scroll)scroll.scrollTop=0;}
 }
 
@@ -159,6 +161,93 @@ memoryNext.addEventListener('click',()=>{void showMemoryPage(memoryPage+1);});
 setMemoryPager();
 // Prefetch the second page as soon as the birthday website starts loading.
 void warmMemoryPage(1);
+
+
+
+// Bonus surprise gift: interactive reveal and confetti.
+const secretOpen=document.getElementById('secret-open');
+const secretReveal=document.getElementById('secret-reveal');
+function resetSecretGift(){
+  secretReveal.hidden=true;
+  secretOpen.textContent='OPEN THE SECRET ♡';
+  secretOpen.setAttribute('aria-expanded','false');
+}
+secretOpen.addEventListener('click',()=>{
+  if(!secretReveal.hidden)return;
+  secretReveal.hidden=false;
+  secretOpen.setAttribute('aria-expanded','true');
+  secretOpen.textContent='SECRET UNLOCKED ♡';
+  launchConfetti();
+});
+
+// A full-size, keyboard-accessible memory photo viewer.
+const memoryZoom=document.getElementById('memory-zoom');
+const zoomImage=document.getElementById('zoom-image');
+const zoomCaption=document.getElementById('zoom-caption');
+const zoomPrev=document.getElementById('zoom-prev');
+const zoomNext=document.getElementById('zoom-next');
+const zoomClose=document.getElementById('zoom-close');
+let zoomIndex=0,zoomOpener=null;
+function displayZoomPhoto(index){
+  zoomIndex=(index+memoryPhotos.length)%memoryPhotos.length;
+  zoomImage.style.opacity='0';
+  zoomImage.onload=()=>{zoomImage.style.opacity='1';};
+  zoomImage.onerror=()=>{zoomImage.style.opacity='1';};
+  zoomImage.src=memoryPhotos[zoomIndex];
+  if(zoomImage.complete && zoomImage.naturalWidth)zoomImage.style.opacity='1';
+  zoomImage.alt=`Trishi's memory photo ${zoomIndex+1}`;
+  zoomCaption.textContent=`${memoryNames[zoomIndex]} · ${zoomIndex+1} / ${memoryPhotos.length}`;
+  void warmMemoryImage(memoryPhotos[(zoomIndex+1)%memoryPhotos.length]);
+}
+function openMemoryZoom(slot){
+  if(memoryGallery.classList.contains('is-loading'))return;
+  const index=memoryPage*photosPerPage+slot;
+  if(index>=memoryPhotos.length)return;
+  zoomOpener=memorySlots[slot];
+  memoryZoom.hidden=false;
+  displayZoomPhoto(index);
+  zoomClose.focus();
+}
+function closeMemoryZoom(){
+  if(memoryZoom.hidden)return;
+  memoryZoom.hidden=true;
+  zoomImage.onload=null;
+  zoomImage.onerror=null;
+  zoomImage.removeAttribute('src');
+  zoomOpener?.focus();
+}
+memorySlots.forEach((card,slot)=>{
+  card.tabIndex=0;
+  card.setAttribute('role','button');
+  card.setAttribute('aria-label','View memory photo '+(slot+1));
+  card.addEventListener('click',()=>openMemoryZoom(slot));
+  card.addEventListener('keydown',e=>{
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();openMemoryZoom(slot);}
+  });
+});
+zoomClose.addEventListener('click',closeMemoryZoom);
+zoomPrev.addEventListener('click',()=>displayZoomPhoto(zoomIndex-1));
+zoomNext.addEventListener('click',()=>displayZoomPhoto(zoomIndex+1));
+memoryZoom.addEventListener('click',e=>{if(e.target===memoryZoom)closeMemoryZoom();});
+document.addEventListener('keydown',e=>{
+  if(memoryZoom.hidden)return;
+  if(e.key==='Escape'){e.preventDefault();e.stopPropagation();closeMemoryZoom();}
+  else if(e.key==='ArrowLeft'){e.preventDefault();displayZoomPhoto(zoomIndex-1);}
+  else if(e.key==='ArrowRight'){e.preventDefault();displayZoomPhoto(zoomIndex+1);}
+},true);
+
+// Reading progress for the already-visible long Hinglish letter.
+const letterScroll=document.querySelector('.letter-scroll');
+const letterProgress=document.getElementById('letter-progress');
+const letterProgressFill=document.getElementById('letter-progress-fill');
+function updateLetterProgress(){
+  const max=letterScroll.scrollHeight-letterScroll.clientHeight;
+  const percent=max>0?Math.max(0,Math.min(100,Math.round(letterScroll.scrollTop/max*100))):100;
+  letterProgressFill.style.width=percent+'%';
+  letterProgress.setAttribute('aria-valuenow',String(percent));
+}
+letterScroll.addEventListener('scroll',updateLetterProgress,{passive:true});
+updateLetterProgress();
 
 // Tiny bestie roast when opening gift three — the letter itself stays sweet.
 const thirdGift = document.querySelector('.gift[data-go="letter"]');
