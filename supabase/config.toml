@@ -1,0 +1,2 @@
+[functions.submit-birthday]
+verify_jwt = false
