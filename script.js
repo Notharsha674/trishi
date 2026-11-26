@@ -24,7 +24,8 @@ function goTo(id) {
   currentScene = id;
   if (id === 'cake') resetCake();
   if (id === 'final') launchConfetti();
-  if (id === 'secret') resetSecretGift();
+  document.body.dataset.scene=id;
+  closeQuickNavigation();
   if (id === 'letter') {const scroll = document.querySelector('.letter-scroll');if(scroll)scroll.scrollTop=0;}
 }
 
@@ -164,22 +165,6 @@ void warmMemoryPage(1);
 
 
 
-// Bonus surprise gift: interactive reveal and confetti.
-const secretOpen=document.getElementById('secret-open');
-const secretReveal=document.getElementById('secret-reveal');
-function resetSecretGift(){
-  secretReveal.hidden=true;
-  secretOpen.textContent='OPEN THE SECRET ♡';
-  secretOpen.setAttribute('aria-expanded','false');
-}
-secretOpen.addEventListener('click',()=>{
-  if(!secretReveal.hidden)return;
-  secretReveal.hidden=false;
-  secretOpen.setAttribute('aria-expanded','true');
-  secretOpen.textContent='SECRET UNLOCKED ♡';
-  launchConfetti();
-});
-
 // A full-size, keyboard-accessible memory photo viewer.
 const memoryZoom=document.getElementById('memory-zoom');
 const zoomImage=document.getElementById('zoom-image');
@@ -287,7 +272,7 @@ birthdayAudio.addEventListener('play',updateMusicButton);
 birthdayAudio.addEventListener('pause',updateMusicButton);
 birthdayAudio.addEventListener('error',()=>{
   musicLabel.textContent='Audio unavailable';
-  musicButton.title='Song file missing — add assets/birthday-song.m4a';
+  musicButton.title='Song could not load. Check the audio file.';
 });
 updateMusicButton();
 
@@ -303,3 +288,59 @@ document.addEventListener('keydown',event=>{
 },{capture:true});
 // Attempt immediately when page opens. This works on browsers that permit autoplay.
 playBirthdayMusic();
+
+
+// Fast navigation to the main screens. Cake and gallery keep their own back button.
+const navToggle=document.getElementById('nav-toggle');
+const navOptions=document.getElementById('nav-options');
+function closeQuickNavigation(){
+  navOptions.hidden=true;
+  navToggle.setAttribute('aria-expanded','false');
+}
+navToggle.addEventListener('click',()=>{
+  const open=navOptions.hidden;
+  navOptions.hidden=!open;
+  navToggle.setAttribute('aria-expanded',String(open));
+});
+document.addEventListener('pointerdown',event=>{
+  if(!event.target.closest('.quick-nav'))closeQuickNavigation();
+});
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape' && !navOptions.hidden){
+    closeQuickNavigation();
+    event.stopPropagation();
+  }
+},true);
+
+// Open a random existing memory in the same full-screen photo viewer.
+document.getElementById('mem-random').addEventListener('click',()=>{
+  zoomOpener=document.getElementById('mem-random');
+  memoryZoom.hidden=false;
+  displayZoomPhoto(Math.floor(Math.random()*memoryPhotos.length));
+  zoomClose.focus();
+});
+
+// Copy the note to clipboard with an older-browser fallback.
+const copyLetter=document.getElementById('copy-letter');
+copyLetter.addEventListener('click',async()=>{
+  const paragraphs=Array.from(document.querySelectorAll('#personal-letter p'),p=>p.textContent.trim());
+  const note='Dear Trishi (chudail Yeon),\n\n'+paragraphs.join('\n\n');
+  let success=false;
+  try{
+    await navigator.clipboard.writeText(note);
+    success=true;
+  }catch(error){
+    const textarea=document.createElement('textarea');
+    textarea.value=note;
+    document.body.appendChild(textarea);
+    textarea.select();
+    success=document.execCommand('copy');
+    textarea.remove();
+  }
+  copyLetter.textContent=success?'Copied!':'Copy manually';
+  setTimeout(()=>{copyLetter.textContent='Copy note';},2200);
+});
+
+// Music volume is adjustable even when the song is playing.
+const volumeSlider=document.getElementById('volume-slider');
+volumeSlider.addEventListener('input',()=>{birthdayAudio.volume=Number(volumeSlider.value)/100;});
