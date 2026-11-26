@@ -71,7 +71,8 @@ export default {
       return result({error:"Incorrect invite code or submissions not configured."},403);
     if(!isUUID(input.submissionId))return result({error:"Invalid submission ID."},400);
     const choices=normalizeChoices(input.choices),scores=normalizeScores(input.scores);
-    const rating=Number.isInteger(input.rating) && Number(input.rating)>=1 && Number(input.rating)<=5?Number(input.rating):null;
+    const rawRating=input.rating;
+    const rating=typeof rawRating==="number" && Number.isInteger(rawRating) && rawRating>=1 && rawRating<=5?rawRating:null;
     if(!choices.length && !scores.length && rating===null)
       return result({error:"Choose at least one answer, score or rating to share."},400);
     const sanitized={choices,scores,rating};
