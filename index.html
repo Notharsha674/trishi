@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="trishi-build" content="2026-11-26-v10-real-games" />
+  <meta name="trishi-build" content="2026-11-26-v11-private-responses-ready" />
   <meta name="theme-color" content="#c93d24" />
   <meta name="description" content="A tiny, very dramatic birthday surprise for Trishi!" />
   <title>For Trishi 💌 | A Birthday Surprise</title>
@@ -13,9 +13,12 @@
   <link rel="stylesheet" href="style.css?v=9" />
   <link rel="stylesheet" href="funzone.css?v=1" />
   <link rel="stylesheet" href="minigames.css?v=1" />
+  <link rel="stylesheet" href="responses.css?v=1" />
   <script src="script.js?v=9" defer></script>
   <script src="funzone.js?v=1" defer></script>
   <script src="minigames.js?v=1" defer></script>
+  <script src="response-config.js?v=1" defer></script>
+  <script src="response-submit.js?v=1" defer></script>
 </head>
 <body data-scene="welcome">
 
@@ -29,6 +32,7 @@
       <button type="button" data-go="letter">Note</button>
       <button type="button" data-go="final">Final wish</button>
       <button type="button" data-go="fun">Fun Zone 🎮</button>
+      <button type="button" data-go="send-answers">Share results with Ash</button>
     </div>
   </nav>
   <main class="stage" id="stage">
@@ -411,8 +415,45 @@
         </div>
         <footer class="fun-footer">
           <small>Just bestie things. No drama. — ash</small>
+          <button type="button" class="fun-return" data-go="send-answers">Send selected results to Ash</button>
           <button type="button" class="fun-return" data-go="gifts">← Back to gifts</button>
         </footer>
+      </div>
+    </section>
+
+    <!-- Explicit consent screen. Nothing is sent automatically. -->
+    <section class="scene response-scene" id="send-answers" aria-label="Review and send selected results to Ash" hidden>
+      <div class="response-sheet">
+        <h1 class="response-title">Share results with Ash</h1>
+        <p class="response-desc">Optional. Review what's included, choose the categories, then decide whether to send. Playing games alone never sends anything.</p>
+        <form id="share-form" class="response-form">
+          <div class="response-box">
+            <h2>1. Choose what to share</h2>
+            <label><input type="checkbox" id="share-choices"> My This or That / Would You Rather choices</label>
+            <label><input type="checkbox" id="share-scores"> My current game scores</label>
+            <label><input type="checkbox" id="share-rating"> My website rating</label>
+            <p>Personal notes, photos, IP addresses, contact details and browsing activity are <strong>not</strong> included. No data is sent automatically.</p>
+            <button type="button" class="response-secondary" id="share-recalculate">Refresh preview</button>
+          </div>
+          <div class="response-box">
+            <h2>2. Review selected results</h2>
+            <textarea id="share-preview" class="response-preview" readonly aria-label="Exactly what will be submitted"></textarea>
+            <p>Only the checked categories above are included. You can go back to play more games first.</p>
+          </div>
+          <div class="response-box response-box-wide">
+            <h2>3. Send only if you want to</h2>
+            <label for="share-code">Invite code from Ash (sent to you privately)</label>
+            <input id="share-code" type="password" minlength="16" maxlength="100" autocomplete="off" placeholder="Private invite code"/>
+            <label><input type="checkbox" id="share-consent" required> I want Ash to receive the selected answers and scores in a private dashboard, and get an email notification.</label>
+            <p class="response-privacy">Ash can view the submitted categories and submission time. You can simply close this page if you don't want to share. A private passcode helps stop strangers from sending fake answers.</p>
+            <div class="response-buttons">
+              <button class="response-action" id="share-submit" type="submit" disabled>Send selected results to Ash</button>
+              <button class="response-secondary" type="button" data-go="fun">Back to games</button>
+            </div>
+            <p id="share-config-status" class="response-status" role="status"></p>
+            <p id="share-status" class="response-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
       </div>
     </section>
   </main>
