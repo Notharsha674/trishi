@@ -21,7 +21,7 @@ The **FUN ZONE** button is on the gift screen, and the Menu provides quick acces
 - **Guess the Number:** higher/lower hints, 1–50, seven attempts
 - **Word Scramble:** 12 shuffled words, hints, skips, scoring and replay
 
-The original Memory Match, Tap Challenge, and This or That bring the total to **nine playable games**. Choose a game using the picker on the Games tab. Use the visible **🎮 Games** button at the top-left, or **🎮 PLAY MINI GAMES** on the gifts screen. The old nonfunctional video-reference footer text was removed.
+The original Memory Match, Tap Challenge, and This or That brought the total to nine playable games. Choose a game using the picker on the Games tab. Use the visible **🎮 Games** button at the top-left, or **🎮 PLAY MINI GAMES** on the gifts screen. The old nonfunctional video-reference footer text was removed.
 - Memory Match: six pairs of cards, shuffle and move counter
 - Ten-second Tap Game: target moves every tap, timer, local personal best
 - This or That: eight rounds of rapid choices
@@ -66,3 +66,15 @@ A new opt-in form lets visitors choose **only** their This-or-That / Would-You-R
 Ash's authenticated dashboard page: https://notharsha674.github.io/trishi/ash-dashboard.html
 
 **Not connected yet.** The frontend, owner-only database SQL, backend Edge Function and email integration source are committed, but need a personal Supabase project, Resend credentials, the owner's Auth UUID, and a shared private invitation code. See [SETUP-PRIVATE-DASHBOARD.md](SETUP-PRIVATE-DASHBOARD.md). Never commit any private credentials.
+
+## Extra arcade games — v12
+
+Five new fully local, replayable mini-games are in the Games tab:
+
+- **2048:** Number merge with keyboard arrows, on-screen directions and touch swipes; local high score
+- **Sequence Recall:** Repeat expanding colour sequences; records the longest completed sequence
+- **Typing Sprint:** 30 seconds of typing with WPM, accuracy and a personal best
+- **Math Dash:** Ten multiple-choice addition, subtraction and multiplication questions
+- **Emoji Decode:** Ten emoji-to-phrase puzzles, shuffled options and a score
+
+This brings the visible game picker to **14 choices**. There's also a **Local Arcade Records** panel showing personal bests stored in the visitor's browser. No scores or typing text are uploaded automatically. The separate opt-in sharing screen can include results from the five new games only after the visitor explicitly selects game scores and sends them. The private Supabase response collection still stays disabled until the owner and invite-code settings are finished.
