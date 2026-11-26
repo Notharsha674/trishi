@@ -12,6 +12,16 @@ Welcome → Shinchan reaction → gift selection → birthday card/cake, 10 phot
 The **FUN ZONE** button is on the gift screen, and the Menu provides quick access.
 
 ### Games
+
+### Six additional playable mini-games (v10)
+- **Tic-Tac-Toe:** play X against a computer with win/block logic and a round scoreboard
+- **Rock Paper Scissors:** play against the computer; wins, losses and ties
+- **Reaction Speed:** wait for green then tap; records fastest time locally
+- **Catch the Cake:** catch a moving cake in a 3×3 grid for 20 seconds; local high score
+- **Guess the Number:** higher/lower hints, 1–50, seven attempts
+- **Word Scramble:** 12 shuffled words, hints, skips, scoring and replay
+
+The original Memory Match, Tap Challenge, and This or That bring the total to **nine playable games**. Choose a game using the picker on the Games tab. Use the visible **🎮 Games** button at the top-left, or **🎮 PLAY MINI GAMES** on the gifts screen. The old nonfunctional video-reference footer text was removed.
 - Memory Match: six pairs of cards, shuffle and move counter
 - Ten-second Tap Game: target moves every tap, timer, local personal best
 - This or That: eight rounds of rapid choices
